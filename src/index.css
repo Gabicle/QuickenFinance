@@ -1,2 +1,6 @@
 @import "./styles/variables.css";
 @import "./styles/spacing.css";
+
+body {
+  font-family: var(--font-family);
+}
