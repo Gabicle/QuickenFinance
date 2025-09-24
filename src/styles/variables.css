@@ -1,0 +1,91 @@
+:root {
+  /* Typography */
+  --font-family-title: "Inter Tight", sans-serif;
+  --font-family-body: "Inter Tight", sans-serif;
+
+  --font-weight-Regular: 400;
+  --font-weight-Medium: 500;
+  --font-weight-Semibold: 600;
+
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+
+  /* Colors */
+  --color-primary-50: #F1ECFCFF;
+  --color-primary-100: #D3C3F4FF;
+  --color-primary-200: #BEA6EFFF;
+  --color-primary-300: #A07DE8FF;
+  --color-primary-400: #8D64E4FF;
+  --color-primary-500: #713DDDFF;
+  --color-primary-600: #6738C9FF;
+  --color-primary-700: #502B9DFF;
+  --color-primary-800: #3E227AFF;
+  --color-primary-900: #2F1A5DFF;
+
+  --color-secondary-50: #FFF6E6FF;
+  --color-secondary-100: #FFE3B0FF;
+  --color-secondary-200: #FFD68AFF;
+  --color-secondary-300: #FEC355FF;
+  --color-secondary-400: #FEB734FF;
+  --color-secondary-500: #FEA501FF;
+  --color-secondary-600: #E79601FF;
+  --color-secondary-700: #B47501FF;
+  --color-secondary-800: #8C5B01FF;
+  --color-secondary-900: #6B4500FF;
+
+  --color-greyscale-0: #FFFFFFFF;
+  --color-greyscale-25: #F6F8FAFF;
+  --color-greyscale-50: #ECEFF3FF;
+  --color-greyscale-100: #DFE1E7FF;
+  --color-greyscale-200: #C1C7D0FF;
+  --color-greyscale-300: #A4ACB9FF;
+  --color-greyscale-400: #818898FF;
+  --color-greyscale-500: #666D80FF;
+  --color-greyscale-600: #36394AFF;
+  --color-greyscale-700: #272835FF;
+  --color-greyscale-800: #1A1B25FF;
+  --color-greyscale-900: #0D0D12FF;
+
+  /* Alerts */
+  --color-alert-error-0: #FFF0F3FF;
+  --color-alert-error-25: #FADBE1FF;
+  --color-alert-error-50: #ED8296FF;
+  --color-alert-error-100: #DF1C41FF;
+  --color-alert-error-200: #96132CFF;
+  --color-alert-error-300: #710E21FF;
+
+  --color-alert-warning-0: #FFF6E0FF;
+  --color-alert-warning-25: #FAEDCCFF;
+  --color-alert-warning-50: #FCDA83FF;
+  --color-alert-warning-100: #FFBE4CFF;
+  --color-alert-warning-200: #966422FF;
+  --color-alert-warning-300: #5C3D1FFF;
+
+  --color-alert-success-0: #EFFEFAFF;
+  --color-alert-success-25: #DDF3EFFF;
+  --color-alert-success-50: #9EE1D4FF;
+  --color-alert-success-100: #40C4AAFF;
+  --color-alert-success-200: #28806FFF;
+  --color-alert-success-300: #184E44FF;
+
+  /* Sky */
+  --color-sky-0: #F0FBFFFF;
+  --color-sky-25: #D1F0FAFF;
+  --color-sky-100: #33CFFFFF;
+  --color-sky-200: #116B97FF;
+  --color-sky-300: #0C4E6EFF;
+
+  /* Spacing scale */
+  --space-base: 8px;
+  --space-0: 0px;
+  --space-1: calc(1 * var(--space-base));
+  --space-2: calc(2 * var(--space-base));
+  --space-3: calc(3 * var(--space-base));
+  --space-4: calc(4 * var(--space-base));
+  --space-5: calc(5 * var(--space-base));
+  --space-6: calc(6 * var(--space-base));
+  --space-8: calc(8 * var(--space-base));
+  --space-10: calc(10 * var(--space-base));
+}
