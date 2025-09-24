@@ -77,7 +77,7 @@
   --color-sky-300: #0C4E6EFF;
 
   --color-border: var(--color-greyscale-100);
-
+  --color-primary: var(--color-primary-500);
 
   /* Spacing scale */
   --space-base: 8px;
@@ -93,5 +93,8 @@
 
 
   --size-icon-md: 2rem;
+
+
+
 
 }

@@ -4,3 +4,25 @@
 body {
   font-family: var(--font-family);
 }
+
+.btn {
+  padding: 8px 16px;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  border-radius: 8px;
+}
+
+
+.btn-light {
+  border: 1px solid var(--color-border);
+  color: var(--color-greyscale-900);
+
+
+}
+
+.btn-dark {
+  border: 1px solid var(--color-primary);
+  color: var(--color-greyscale-0);
+  background-color: var(--color-primary);
+}

@@ -1,4 +1,6 @@
+import { Button } from "../components/button/Button";
 import PageLayout from "../layout/PageLayout";
+import Title from "../layout/Title";
 
 const fakeUser: User = {
   firstName: "Robert",
@@ -18,11 +20,19 @@ export default function DashboardPage() {
   const title = "Dashboard";
   return (
     <PageLayout headerProps={{ title, user: fakeUser }}>
-      <div>
-        Dashboard here
-      </div>
+      <Title title={title}>
+        <Button text="View Reports" type="light" handleClick={onViewReports} />
+        <Button text="Add Transaction" type="dark" handleClick={onAddTransaction} />
+      </Title>
     </PageLayout >
   )
 }
 
 
+function onViewReports(): void {
+  console.log("View Reports");
+}
+
+function onAddTransaction(): void {
+  console.log("Add Transaction");
+}

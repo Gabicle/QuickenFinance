@@ -1,0 +1,13 @@
+.title_container {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.title_actions {
+  display: flex;
+  gap: 10px;
+
+}
