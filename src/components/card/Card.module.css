@@ -1,0 +1,91 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 16px;
+  border-radius: 12px;
+
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  box-shadow: 0px 2px 4px -1px rgba(13, 13, 18, 0.06);
+  overflow: hidden;
+}
+
+.card_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.28px;
+  font-weight: 500;
+  color: #666D80;
+}
+
+.card_content {
+  color: #0D0D12;
+  font-size: 24px;
+  line-height: 31.2px;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+
+.card_footer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.24px;
+}
+
+
+/*TODO: Badge --to move everything below to separate component */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 3px 4px;
+  border-radius: 6px;
+
+  background: #EFFEFA;
+  border: 1px solid #339D88;
+
+  color: #339D88;
+  font-weight: 600;
+}
+
+/* Caption */
+.caption {
+  color: #666D80;
+  font-weight: 500;
+}
+
+/* Icon tile from the header (36x36) */
+.iconContainer {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #F1ECFC;
+}
+
+
+.iconRing {
+  position: absolute;
+  left: 1.67px;
+  top: 1.67px;
+  width: 16.67px;
+  height: 16.67px;
+  outline: 2px solid #713DDD;
+  outline-offset: -1px;
+  border-radius: 2px;
+
+}

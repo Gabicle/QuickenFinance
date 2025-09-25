@@ -1,6 +1,7 @@
 import { Button } from "../components/button/Button";
 import PageLayout from "../layout/PageLayout";
 import Title from "../layout/Title";
+import DashboardCard from "./DashboardCard";
 
 const fakeUser: User = {
   firstName: "Robert",
@@ -24,6 +25,8 @@ export default function DashboardPage() {
         <Button text="View Reports" type="light" handleClick={onViewReports} />
         <Button text="Add Transaction" type="dark" handleClick={onAddTransaction} />
       </Title>
+
+      <DashboardCard />
     </PageLayout >
   )
 }
