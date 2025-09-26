@@ -1,23 +1,25 @@
 import type { ReactNode } from "react";
 import s from './Card.module.css';
+import Icon from "../icon/Icon";
 
 type CardProps = {
-  header: ReactNode;
-  content: ReactNode;
+  header: string;
+  headerIcon?: ReactNode;
+  aggregate: number;
   footer: ReactNode;
 }
 
-export default function Card({ header, content, footer }: CardProps) {
+export default function Card({ header, headerIcon, aggregate, footer }: CardProps) {
   return (
     <div className={s.card}>
       <div className={s.card_header}>
-        {header}
+        <span className="text-md-md">{header}</span>
+        {headerIcon && <Icon className={s.header_icon} size="md">{headerIcon}</Icon>}
+
       </div>
-      <div className={s.card_content}>
-        {content}
-      </div>
+      <h4>{aggregate}</h4>
       <div className={s.card_footer}>
-        {footer}
+        {/* {footer} */}
       </div>
     </div>
   )

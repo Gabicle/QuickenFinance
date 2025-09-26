@@ -1,28 +1,23 @@
-import { Button } from "../components/button/Button";
-import Title from "../layout/Title";
-import DashboardCard from "./DashboardCard";
+import Dashboard from "../features/dashboard/Dashboard";
+
 
 
 
 export default function DashboardPage() {
-  const title = "Dashboard";
   return (
     <>
-      <Title title={title}>
-        <Button text="View Reports" type="light" handleClick={onViewReports} />
-        <Button text="Add Transaction" type="dark" handleClick={onAddTransaction} />
-      </Title>
-
-      <DashboardCard />
+      <Dashboard />
     </>
+
+    // <div>
+    //   <Title title={title}>
+    //     <Button text="View Reports" type="light" handleClick={onViewReports} />
+    //     <Button text="Add Transaction" type="dark" handleClick={onAddTransaction} />
+    //   </Title>
+
+    //   <DashboardCard />
+    // </div>
   )
 }
 
 
-function onViewReports(): void {
-  console.log("View Reports");
-}
-
-function onAddTransaction(): void {
-  console.log("Add Transaction");
-}

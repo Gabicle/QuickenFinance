@@ -1,0 +1,4 @@
+.card_container {
+  display: flex;
+  gap: var(--spacing-3);
+}

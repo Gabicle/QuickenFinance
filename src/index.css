@@ -7,10 +7,14 @@
   padding: 0;
 }
 
+html {
+  line-height: 1.6;
+
+}
+
 body {
   font-family: var(--font-family);
   color: var(--color-greyscale-400);
-  line-height: 1.6;
 
 }
 
@@ -165,4 +169,11 @@ hr {
 
 .btn-lg {
   height: 3.25rem;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
 }
