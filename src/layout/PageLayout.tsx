@@ -24,10 +24,11 @@ export default function PageLayout() {
     <div className={s.appShell}>
       <Sidebar />
 
-      <div className="main">
+      <div className={s.main}>
+        <Header title='Dash' user={fakeUser} />
+
         <p>main here</p>
         {/* <Header title="Dash" user={fakeUser} />
-        <hr />
         <main className={s.layout_container}>
           <Outlet />
         </main> */}

@@ -5,3 +5,10 @@
   grid-template-columns: 17rem 1fr;
 
 }
+
+.main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+
+}

@@ -1,3 +1,4 @@
+import Icon from "../components/icon/Icon";
 import SvgBell05 from "../components/icons/Bell05";
 import s from './Header.module.css';
 import type { User } from "./PageLayout";
@@ -9,17 +10,20 @@ export type HeaderProps = {
 export default function Header({ title, user }: HeaderProps) {
   return (
     <header className={s.header}>
-      <p className={s.header_title}>Home / <span>{title}</span></p>
+      <p className='text-md-md'>
+        Home /
+        <span className={s.page_title}> {title}</span>
+      </p>
       {/* Actions */}
       <div className={s.actions_toolbar}>
-        <div className={s.icon_container}>
-          <SvgBell05 />
-        </div>
+        <Icon size="md"><SvgBell05 /></Icon>
+
+
         <div className={s.profile_container}>
           <span className={s.profile_name}>
             {user.firstName} {user.lastName}
           </span>
-          <span className={s.profile_type}>{user.type}</span>
+          <span className='text-sm-regular'>{user.type}</span>
         </div>
 
 
