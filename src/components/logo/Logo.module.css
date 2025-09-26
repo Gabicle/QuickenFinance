@@ -1,0 +1,14 @@
+.logo_container {
+  display: flex;
+  border-radius: var(--radius-0);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  background-color: var(--color-primary);
+}
+
+.logo_color {
+  color: var(--color-greyscale-0);
+}

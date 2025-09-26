@@ -1,6 +1,6 @@
 import SvgBell05 from "../components/icons/Bell05";
-import type { User } from "../pages/DashboardPage";
 import s from './Header.module.css';
+import type { User } from "./PageLayout";
 export type HeaderProps = {
   title: string;
   user: User;

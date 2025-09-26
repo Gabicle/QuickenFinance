@@ -1,15 +1,4 @@
 :root {
-  /* Typography */
-  --font-family: "Inter Tight", sans-serif;
-
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-
-  --font-size-sm: 12px;
-  --font-size-md: 14px;
-  --font-size-lg: 16px;
-  --font-size-xl: 18px;
 
   /* Colors */
   --color-primary-50: #F1ECFCFF;
@@ -79,22 +68,54 @@
   --color-border: var(--color-greyscale-100);
   --color-primary: var(--color-primary-500);
 
-  /* Spacing scale */
-  --space-base: 8px;
-  --space-0: 0px;
-  --space-1: calc(1 * var(--space-base));
-  --space-2: calc(2 * var(--space-base));
-  --space-3: calc(3 * var(--space-base));
-  --space-4: calc(4 * var(--space-base));
-  --space-5: calc(5 * var(--space-base));
-  --space-6: calc(6 * var(--space-base));
-  --space-8: calc(8 * var(--space-base));
-  --space-10: calc(10 * var(--space-base));
+  --bg-light: var(--color-greyscale-25);
+
+  /* FONT FAMILY */
+  --font-family: "Inter Tight", sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* FONT-SIZE */
+  --heading-h1: 3rem;
+  --heading-h2: 2.5rem;
+  --heading-h3: 2rem;
+  --heading-h4: 1.5rem;
+  --heading-h5: 1.25rem;
+  --heading-h6: 1.125rem;
+
+  --text-lg: 1.125rem;
+  --text-md: 1rem;
+  --text-sm: 0.875rem;
+  --text-xs: 0.75rem;
+
+  --shadow-xs: 0 1px 2px 0 rgba(13, 13, 18, 0.06);
+  --shadow-sm: 0 1px 3px 0 rgba(13, 13, 18, 0.05), 0 1px 2px 0 rgba(13, 13, 18, 0.04);
+  --shadow-md: 0 5px 10px -2px rgba(13, 13, 18, 0.04), 0 4px 8px -1px rgba(13, 13, 18, 0.02);
+  --shadow-lg: 0 12px 16px -4px rgba(13, 13, 18, 0.08), 0 4px 6px -2px rgba(13, 13, 18, 0.03);
+  --shadow-xl: 0 24px 48px -12px rgba(13, 13, 18, 0.12);
+  --shadow-xxl: 0 24px 48px -12px rgba(13, 13, 18, 0.18);
+
+  --radius-0: 8px;
+  --radius-1: 12px;
+  --radius-2: 1000px;
+
+  --spacing-0: 0.25rem;
+  --spacing-1: 0.5rem;
+  --spacing-2: 0.75rem;
+  --spacing-3: 1rem;
+  --spacing-4: 1.25rem;
 
 
-  --size-icon-md: 2rem;
-
-
+  --icon-base: 1rem;
+  /* ~16px by default */
+  --icon-sm: calc(var(--icon-base) * 2);
+  /* 32px */
+  --icon-md: calc(var(--icon-base) * 2.25);
+  /* 36px */
+  --icon-lg: calc(var(--icon-base) * 2.375);
+  /* 38px */
 
 
 }

@@ -1,9 +1,7 @@
-.layout_container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 24px;
+.appShell {
+
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: 17rem 1fr;
+
 }
