@@ -3,35 +3,28 @@ import s from './PageLayout.module.css';
 import Header from "./Header";
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/sidebar/Sidebar';
-
-const fakeUser: User = {
-  firstName: "Robert",
-  lastName: "Johnson",
-  type: "Basic Account",
-  imgUrl: "/avatar-robert.jpg", // put a real path/url here
-};
-
-export type User = {
-  firstName: string;
-  lastName: string;
-  type: string;
-  imgUrl: string;
-};
+import { useUser } from '../context/UserContext';
 
 export default function PageLayout() {
+  const { user, loading } = useUser();
+
+  if (loading) {
+    return <div className={s.appShell}>Loading user…</div>;
+  }
+
+  if (!user) {
+
+    return <div className={s.appShell}>No user found</div>;
+  }
 
   return (
     <div className={s.appShell}>
       <Sidebar />
-
       <div className={s.main}>
-        <Header title='Dash' user={fakeUser} />
-
-        <p>main here</p>
-        {/* <Header title="Dash" user={fakeUser} />
+        <Header title="Dash" user={user} />
         <main className={s.layout_container}>
           <Outlet />
-        </main> */}
+        </main>
       </div>
     </div>
   );
