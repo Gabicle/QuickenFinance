@@ -1,10 +1,21 @@
 .appShell {
-
   height: 100dvh;
   display: grid;
   grid-template-columns: 17rem 1fr;
   grid-template-rows: 1fr;
+}
 
+.appShell_lg {
+  grid-template-columns: 17rem 1fr;
+
+}
+
+.appShell_sm {
+  grid-template-columns: 64px 1fr;
+}
+
+.appShell.collapsed {
+  --sidebar-w: 64px;
 }
 
 .main {

@@ -42,3 +42,19 @@
 .text_danger {
   color: var(--color-danger);
 }
+
+
+
+.iconOnly {
+  justify-content: center;
+  width: 44px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 8px 0;
+}
+
+.active {
+  background: #F1ECFC;
+
+
+}
