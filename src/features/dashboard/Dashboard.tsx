@@ -2,6 +2,7 @@ import { Button } from "../../components/button/Button";
 import Card from "../../components/card/Card";
 import SvgCoinsStacked03 from "../../components/icons/CoinsStacked03";
 import Title from "../../layout/Title";
+import { onAddTransaction } from "../transactions/utitlity";
 import s from './Dashboard.module.css';
 
 
@@ -42,6 +43,3 @@ function onViewReports(): void {
   console.log("View Reports");
 }
 
-function onAddTransaction(): void {
-  console.log("Add Transaction");
-}

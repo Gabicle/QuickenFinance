@@ -1,7 +1,7 @@
 import Icon from "../components/icon/Icon";
 import SvgBell05 from "../components/icons/Bell05";
+import type { User } from "../context/UserContext";
 import s from './Header.module.css';
-import type { User } from "./PageLayout";
 export type HeaderProps = {
   title: string;
   user: User;

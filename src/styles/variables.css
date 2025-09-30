@@ -67,7 +67,9 @@
 
   --color-border: var(--color-greyscale-100);
   --color-primary: var(--color-primary-500);
-
+  --color-danger: var(--color-alert-error-200);
+  --color-warning: var(--color-alert-warning-200);
+  --color-success: var(--color-alert-success-200);
   --bg-light: var(--color-greyscale-25);
 
   /* FONT FAMILY */
