@@ -60,6 +60,12 @@ hr {
 
 }
 
+a {
+  color: var(--color-greyscale-500);
+  text-decoration: none;
+}
+
+
 /* text-{size}-{weight} */
 .text-lg-bold {
   font-size: var(--text-lg);

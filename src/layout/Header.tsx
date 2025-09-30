@@ -1,5 +1,5 @@
 import Icon from "../components/icon/Icon";
-import SvgBell05 from "../components/icons/Bell05";
+
 import type { User } from "../context/UserContext";
 import s from './Header.module.css';
 export type HeaderProps = {
@@ -16,7 +16,7 @@ export default function Header({ title, user }: HeaderProps) {
       </p>
       {/* Actions */}
       <div className={s.actions_toolbar}>
-        <Icon size="md"><SvgBell05 /></Icon>
+        {/* <Icon size="md"><SvgBell05 /></Icon> */}
 
 
         <div className={s.profile_container}>

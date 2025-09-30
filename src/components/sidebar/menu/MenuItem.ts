@@ -1,7 +1,10 @@
-import type { ReactNode } from "react";
+import type { Color, Glyph } from "../../icon/Icon";
+
+
 
 export type MenuItem = {
   to: string;
   label: string;
-  icon: ReactNode;
+  icon: Glyph;
+ iconColor?: Color;
 }

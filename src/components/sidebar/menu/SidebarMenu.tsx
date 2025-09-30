@@ -1,14 +1,12 @@
 import { NavLink } from "react-router-dom";
 import type { MenuItem } from "./MenuItem";
-import Icon from "../../icon/Icon";
 import s from "./SidebarMenu.module.css";
+import Icon, { type Glyph, type Color } from "../../icon/Icon";
 
-type SidebarMenuProps = {
+export default function SidebarMenu({ headerTitle, menuItems }: {
   headerTitle?: string;
   menuItems: MenuItem[];
-};
-
-export default function SidebarMenu({ headerTitle, menuItems }: SidebarMenuProps) {
+}) {
   return (
     <div className={s.menu_container}>
       {headerTitle && (
@@ -16,25 +14,39 @@ export default function SidebarMenu({ headerTitle, menuItems }: SidebarMenuProps
           <p className="text-sm-md uppercase">{headerTitle}</p>
         </div>
       )}
-
       <nav className={s.menu_items}>
         {menuItems.map((item) => (
-          <MenuItem key={item.to} {...item} />
+          <Item key={item.to} {...item} />
         ))}
       </nav>
     </div>
   );
 }
 
-function MenuItem({ to, label, icon }: MenuItem) {
+function Item({ to, label, icon, iconColor }: MenuItem) {
   return (
-    <NavLink to={to} className={s.menu_item}>
-      {icon && (
-        <Icon size="md" className={s.icon}>
-          {icon}
-        </Icon>
-      )}
-      <span className={s.label}>{label}</span>
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `${s.menu_item} ${isActive ? s.active : ""}`
+      }
+    >
+      {icon && <MenuIcon icon={icon} iconColor={iconColor} />}
+      <span
+        className={`text-md-md ${iconColor === "danger" ? s.text_danger : ""}`}
+      >
+        {label}
+      </span>
     </NavLink>
   );
+}
+
+function MenuIcon({
+  icon,
+  iconColor = "muted",
+}: {
+  icon: Glyph;
+  iconColor?: Color;
+}) {
+  return <Icon glyph={icon} color={iconColor} />;
 }

@@ -1,17 +1,15 @@
-import type { SVGProps } from 'react';
-import SvgPiggyBank01 from '../icons/PiggyBank01';
-import s from './Logo.module.css';
 
-type Variant = "fill" | "outline" | "none";
+import styles from './Logo.module.css';
+import Icon from '../icon/Icon';
+import PiggyBank01 from '../../icons/PiggyBank01';
 
-interface LogoProps extends SVGProps<SVGSVGElement> {
-  variant?: Variant;
-}
 
-export default function Logo({ variant = "fill", ...props }: LogoProps) {
+
+export default function Logo() {
   return (
-    <div className={s.logo_container}>
-      <SvgPiggyBank01 variant={variant} className={s.logo_color}{...props} />
+    <div className={styles.logo_container}>
+      <Icon color='white' glyph={PiggyBank01} />
     </div>
+
   )
 }

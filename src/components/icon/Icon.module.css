@@ -1,24 +1,39 @@
 .icon {
-  display: inline-flex;
+  display: inline-block;
   line-height: 1;
+  vertical-align: middle;
 }
 
+/* sizes */
 .sm {
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .md {
-  font-size: 1.5rem;
+  font-size: 20px;
 }
 
 .lg {
-  font-size: 2rem;
+  font-size: 24px;
 }
 
+/* colors */
+.icon-inherit {
+  color: currentColor;
+}
 
-.icon svg {
-  width: 1em;
-  height: 1em;
-  fill: currentColor;
-  stroke: currentColor;
+.icon-brand {
+  color: var(--color-primary);
+}
+
+.icon-danger {
+  color: var(--color-danger);
+}
+
+.icon-muted {
+  color: var(--color-greyscale-500);
+}
+
+.icon-white {
+  color: var(--color-greyscale-0);
 }

@@ -14,7 +14,7 @@ export default function Card({ header, headerIcon, aggregate, footer }: CardProp
     <div className={s.card}>
       <div className={s.card_header}>
         <span className="text-md-md">{header}</span>
-        {headerIcon && <Icon className={s.header_icon} size="md">{headerIcon}</Icon>}
+        {/* {headerIcon && <Icon className={s.header_icon} size="md">{headerIcon}</Icon>} */}
 
       </div>
       <h4>{aggregate}</h4>

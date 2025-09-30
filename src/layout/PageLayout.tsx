@@ -17,10 +17,10 @@ export default function PageLayout() {
     <div className={s.appShell}>
       <Sidebar />
       <div className={s.main}>
-        <Header title={title} user={user} />
+        {/* <Header title={title} user={user} />
         <main className={s.layout_container}>
           <Outlet />
-        </main>
+        </main> */}
       </div>
     </div>
   );

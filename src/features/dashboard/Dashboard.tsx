@@ -1,6 +1,6 @@
 import { Button } from "../../components/button/Button";
 import Card from "../../components/card/Card";
-import SvgCoinsStacked03 from "../../components/icons/CoinsStacked03";
+
 import Title from "../../layout/Title";
 import { onAddTransaction } from "../transactions/utitlity";
 import s from './Dashboard.module.css';
@@ -19,17 +19,17 @@ export default function Dashboard() {
       <div className={s.card_container}>
         <Card
           header="Total Earnings"
-          headerIcon={<SvgCoinsStacked03 />}
+          headerIcon={undefined}
           aggregate={3928.41}
           footer={undefined} />
         <Card
           header="Total Earnings"
-          headerIcon={<SvgCoinsStacked03 />}
+          headerIcon={undefined}
           aggregate={3928.41}
           footer={undefined} />
         <Card
           header="Total Earnings"
-          headerIcon={<SvgCoinsStacked03 />}
+          headerIcon={undefined}
           aggregate={3928.41}
           footer={undefined} />
 
