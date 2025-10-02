@@ -3,9 +3,9 @@ import { UserProvider } from "./context/UserContext"
 import { router } from './router';
 
 
+
+
 function App() {
-
-
   return (
     <UserProvider>
       <RouterProvider router={router} />

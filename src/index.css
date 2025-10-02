@@ -65,6 +65,16 @@ a {
   text-decoration: none;
 }
 
+input {
+  border: none;
+  outline: none;
+  letter-spacing: 0.28px;
+}
+
+p {
+  letter-spacing: 0.32px;
+}
+
 
 /* text-{size}-{weight} */
 .text-lg-bold {
@@ -143,6 +153,7 @@ a {
 }
 
 .btn-primary {
+  border: 1px solid var(--color-primary-600);
   background-color: var(--color-primary-600);
   box-shadow: var(--shadow-xs);
   border-radius: var(--radius-1);
@@ -151,8 +162,8 @@ a {
 }
 
 .btn-secondary {
+  border: 1px solid var(--color-greyscale-100);
   background-color: var(--color-greyscale-25);
-  border-color: var(--color-greyscale-100);
   color: var(--color-greyscale-900);
   box-shadow: var(--shadow-xs);
   border-radius: var(--radius-1);

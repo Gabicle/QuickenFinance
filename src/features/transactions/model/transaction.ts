@@ -1,10 +1,15 @@
-export type TransactionStatus = "completed" | "failed" | "pending";
+export type TransactionStatus = "pending"
+  | "completed"
+  | "failed";
 export type TransactionType = "expense" | "income";
 
-export interface Account {
-  type: string;
-  name: string;
-}
+export type Account = {
+  id: string;          
+  name: string;        
+  currency: string;    
+  balance: number;   
+};
+
 
 export interface TimelineEntry {
   label: string;
@@ -21,16 +26,20 @@ export interface PaymentDetail {
   autoRenewal?: boolean;
 }
 
-export interface Transaction {
-  id: string;
-  description: string;
-  date: string; // ISO
-  account: Account;
-  type: TransactionType;
+export type Amount = {
+  amount: number;      
+  currency: string;    
+};
+
+
+export type Transaction = {
+ id: string;               
+  description: string;   
+  date: string;           
+  account: Account;         
+  type: "income" | "expense";
   status: TransactionStatus;
-  amount: number;
-  currency: string;
-  method: string;
-  timeline: TimelineEntry[];
-  paymentDetails?: PaymentDetail;
+  amount: Amount;           
+  category: string;         
+  displayAmount: string;    
 }

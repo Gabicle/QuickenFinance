@@ -26,10 +26,10 @@ export default function PageLayout() {
     <div className={appShellClass}>
       <Sidebar expanded={sidebarExpanded} onToggle={() => setSidebarExpanded(v => !v)} />
       <div className={s.main}>
-        {/* <Header title={title} user={user} />
+        <Header title={title} user={user} />
         <main className={s.layout_container}>
           <Outlet />
-        </main> */}
+        </main>
       </div>
     </div>
   );

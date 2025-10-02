@@ -1,5 +1,5 @@
-import type { SVGProps } from "react";
-import { Ref, forwardRef, memo } from "react";
+import type { SVGProps, Ref } from "react";
+import { forwardRef, memo } from "react";
 const SvgCoinsStacked03 = (
   props: SVGProps<SVGSVGElement>,
   ref: Ref<SVGSVGElement>

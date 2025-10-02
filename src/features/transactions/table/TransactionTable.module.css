@@ -1,0 +1,79 @@
+:root {
+  --text-muted: #666D80;
+  --text-default: #1A1C21;
+  --outline-weak: #DFE1E7;
+  --outline-mid: #818898;
+  --bg: #ffffff;
+  --badge-green: #0BA36A;
+  --badge-amber: #B26B00;
+}
+
+.section {
+  width: 100%;
+}
+
+/* Table */
+.tableWrapper {
+  border: 1px solid var(--outline-weak);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 8px 20px 0 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--bg);
+}
+
+.th {
+  text-align: left;
+  background: #fafbfc;
+  border-bottom: 1px solid var(--outline-weak);
+  padding: 12px 16px;
+  font: 600 12px/16px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color: var(--text-muted);
+  letter-spacing: 0.2px;
+}
+
+
+.td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--outline-weak);
+  font: 500 14px/20px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color: var(--text-default);
+}
+
+.empty {
+  text-align: center;
+  padding: 28px;
+  color: var(--text-muted);
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+/* Amount coloring */
+.negative {
+  color: #B00020;
+}
+
+.positive {
+  color: #0B8A2E;
+}
+
+
+/* Visually hidden (for caption) */
+.sr_only {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}

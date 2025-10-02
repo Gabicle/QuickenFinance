@@ -1,0 +1,98 @@
+.bar {
+  width: 100%;
+  height: 100%;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.barLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.barRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  outline: 1px var(--outline-weak) solid;
+  outline-offset: -1px;
+  height: 38px;
+  padding: 8px 14px 8px 12px;
+}
+
+
+.searchIcon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+}
+
+.searchGlyph {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  outline: 1.5px var(--outline-mid) solid;
+  outline-offset: -0.75px;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-muted);
+  font: 500 14px/21px "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  letter-spacing: 0.28px;
+  min-width: 180px;
+}
+
+.searchInput::placeholder {
+  color: var(--text-muted);
+}
+
+.iconButton {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  outline: 1px var(--outline-weak) solid;
+  outline-offset: -1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.iconButton:focus-visible {
+  box-shadow: 0 0 0 2px #5b9dff;
+}
+
+.iconBoxSmall {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.iconSquareSmall {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  outline: 1.5px var(--outline-mid) solid;
+  outline-offset: -0.75px;
+}

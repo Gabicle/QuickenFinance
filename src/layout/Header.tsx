@@ -1,6 +1,7 @@
 import Icon from "../components/icon/Icon";
 
 import type { User } from "../context/UserContext";
+import ProfileAvatar from "../icons/ProfileAvatar";
 import s from './Header.module.css';
 export type HeaderProps = {
   title: string;
@@ -17,7 +18,7 @@ export default function Header({ title, user }: HeaderProps) {
       {/* Actions */}
       <div className={s.actions_toolbar}>
         {/* <Icon size="md"><SvgBell05 /></Icon> */}
-
+        <Icon glyph={ProfileAvatar} size="lg" color="brand" decorative />
 
         <div className={s.profile_container}>
           <span className={s.profile_name}>
