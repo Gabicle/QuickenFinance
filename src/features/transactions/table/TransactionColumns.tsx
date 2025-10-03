@@ -6,6 +6,7 @@ import TransactionBadge from '../TransactionBadge';
 const col = createColumnHelper<Transaction>();
 
 export const transactionColumns = [
+
   col.accessor('date', {
     header: 'Date',
     cell: info => new Date(info.getValue()).toLocaleDateString(),
@@ -16,6 +17,9 @@ export const transactionColumns = [
   col.accessor(row => row.account.name, {
     id: 'accountName',
     header: 'Account',
+  }),
+  col.accessor('category', {
+    header: 'Category',
   }),
   col.accessor('status', {
     header: 'Status',

@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
 import { Button } from '../../components/button/Button';
 import Card from '../../components/card/Card';
-import { useAccounts } from '../../hooks/useTransactions';
+import { useAccounts, useTransactions } from '../../hooks/useTransactions';
 
 import Title from '../../layout/Title';
 import TransactionTable from './table/TransactionTable';
@@ -9,15 +10,31 @@ import { aggregateAccounts, onAddTransaction, onRecurring } from './utitlity';
 
 
 export default function Transactions() {
-
   const title = 'Transactions';
 
-  const { data } = useAccounts();
+  const { data: accountsData } = useAccounts();
+  const { accounts, totalBalance } = accountsData ?? { accounts: [], totalBalance: 0 };
 
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(10);
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebouncedValue(search, 300);
 
-  const { accounts, totalBalance } = data ?? { accounts: [], totalBalance: 0 };
+  const { data, isFetching, isLoading, isError } = useTransactions({
+    page,
+    pageSize,
+    q: debouncedSearch,
+  });
 
+  const rows = data?.data ?? [];
+  const totalPages = data?.totalPages ?? 1;
 
+  const goPrev = () => setPage((p) => Math.max(1, p - 1));
+  const goNext = () => setPage((p) => Math.min(totalPages, p + 1));
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch]);
 
 
   return (
@@ -33,7 +50,19 @@ export default function Transactions() {
         <Card header="Total Expense" headerIcon={undefined} aggregate={3928.41} footer={undefined} />
       </div>
 
-      <TransactionTable />
+      <TransactionTable
+        rows={rows}
+        isLoading={isLoading}
+        isError={isError}
+        isFetching={isFetching}
+        search={search}
+        onSearchChange={setSearch}
+        page={page}
+        pageSize={pageSize}
+        totalPages={totalPages}
+        onPrev={goPrev}
+        onNext={goNext}
+      />
 
 
     </div>
@@ -41,3 +70,13 @@ export default function Transactions() {
 }
 
 
+
+
+const useDebouncedValue = (value: string, delay = 300) => {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const id = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(id);
+  }, [value, delay]);
+  return debounced;
+};

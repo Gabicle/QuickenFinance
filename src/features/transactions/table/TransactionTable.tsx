@@ -1,6 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import type { ListParams } from "../../../api/transactions";
-import { useTransactions } from "../../../hooks/useTransactions";
+import { useCallback, useMemo } from "react";
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import type { Transaction, TransactionStatus } from "../model/transaction";
 import styles from './TransactionTable.module.css'
@@ -22,18 +20,35 @@ const statusLabelMap: Record<TransactionStatus, string> = {
   failed: "Failed",
 };
 
-const useDebouncedValue = (value: string, delay = 300) => {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(id);
-  }, [value, delay]);
-  return debounced;
+type TransactionTableProps = {
+  rows: Transaction[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isFetching?: boolean;
+  search: string;
+  onSearchChange: (v: string) => void;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  onPrev: () => void;
+  onNext: () => void;
 };
 
 const columnHelper = createColumnHelper<Transaction>();
 
-export default function TransactionsTable() {
+export default function TransactionsTable({
+  rows,
+  isLoading,
+  isError,
+  isFetching,
+  search,
+  onSearchChange,
+  page,
+  pageSize,
+  totalPages,
+  onPrev,
+  onNext,
+}: TransactionTableProps) {
 
   const title = "Recent Transactions";
 
@@ -42,30 +57,6 @@ export default function TransactionsTable() {
     month: "short",
     day: "2-digit"
   };
-
-
-  const [params, setParams] = useState<ListParams>({
-    page: 1,
-    pageSize: 10,
-    q: ""
-  });
-
-  // Debounced search binding
-  const [search, setSearch] = useState(params.q ?? "");
-  const debouncedSearch = useDebouncedValue(search, 300);
-  useEffect(() => {
-    setParams((p) => ({ ...p, page: 1, q: debouncedSearch }));
-  }, [debouncedSearch]);
-
-
-
-  const { data, isFetching, isLoading, isError } = useTransactions(params);
-  const rows = data?.data ?? [];
-  const page = data?.page ?? params.page ?? 1;
-  const pageSize = data?.pageSize ?? params.pageSize ?? 10;
-  const totalPages = data?.totalPages ?? 1;
-  const hasNext = data?.hasMore ?? page < totalPages;
-  const hasPrev = data?.hasPrev ?? page > 1;
 
   const dateFormatter = useMemo(
     () => new Intl.DateTimeFormat(undefined, dateFormat),
@@ -90,14 +81,13 @@ export default function TransactionsTable() {
     [currencyFormatters]
   );
 
+  const getSignedAmount = (t: Transaction) =>
+    t.type === 'expense' ? -Math.abs(t.amount.amount) : Math.abs(t.amount.amount);
+
 
   // Columns
   const columns = useMemo(
     () => [
-      columnHelper.accessor("id", {
-        header: "ID",
-        cell: (info) => <code className={styles.mono}>{info.getValue()}</code>,
-      }),
       columnHelper.accessor("date", {
         header: "Date",
         cell: (info) => dateFormatter.format(new Date(info.getValue())),
@@ -106,11 +96,19 @@ export default function TransactionsTable() {
         header: "Description",
         cell: (info) => info.getValue(),
       }),
+      columnHelper.accessor("category", {
+        header: "Category",
+        cell: (info) => info.getValue(),
+      }
+
+      ),
       columnHelper.accessor((row) => row.account.name, {
         id: "accountName",
         header: "Account",
       }),
-      columnHelper.accessor((row) => row.amount.amount, {
+
+      columnHelper.accessor((row) => getSignedAmount(row), {
+
         id: "amount",
         header: "Amount",
         cell: (info) => {
@@ -143,7 +141,7 @@ export default function TransactionsTable() {
     data: rows,
     columns,
     state: {
-      globalFilter: params.q ?? "",
+      globalFilter: search,
       pagination: {
         pageIndex: page - 1,
         pageSize,
@@ -154,14 +152,6 @@ export default function TransactionsTable() {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  // Pagination handlers
-  const goPrev = () =>
-    setParams((p) => ({ ...p, page: data?.prevPage ?? Math.max(1, (p.page ?? 1) - 1) }));
-
-  const goNext = () =>
-    setParams((p) => ({ ...p, page: data?.nextPage ?? Math.min(totalPages, (p.page ?? 1) + 1) }));
-
-
 
   return (
     <section className={styles.section} aria-labelledby="recent-transactions-title">
@@ -169,11 +159,7 @@ export default function TransactionsTable() {
       <Toolbar
         title={title}
         search={search}
-        onSearchChange={setSearch}
-        onActionClick={() => {
-          // Placeholder: hook up a menu/popover if/when needed
-          // e.g., openFilters(), exportCSV(), etc.
-        }}
+        onSearchChange={onSearchChange}
       />
 
       {/* Table */}
@@ -233,8 +219,8 @@ export default function TransactionsTable() {
       <Pagination
         page={page}
         totalPages={totalPages}
-        onPrev={goPrev}
-        onNext={goNext}
+        onPrev={onPrev}
+        onNext={onNext}
         isFetching={isFetching}
       />
     </section>
