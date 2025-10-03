@@ -5,7 +5,10 @@ import type {
   Transaction,
   TransactionStatus,
 } from "../../features/transactions/model/transaction";
-import type { User } from "../../context/UserContext";
+import type { User } from "../../types/User";
+
+
+const DEFAULT_CURRENCY = 'EUR'
 
 // ---------- Currency Formatting ----------
 function formatCurrency(amount: number, currency: string, locale = "en-US"): string {
@@ -70,7 +73,7 @@ export function makeTransactionStatus(): TransactionStatus {
 
 // ---------- Account ----------
 export function makeAccount(overrides?: Partial<Account> & { balance?: number; currency?: string }): Account {
-  const currency = overrides?.currency ?? faker.finance.currencyCode();
+  const currency = overrides?.currency ?? DEFAULT_CURRENCY;
   return {
     id: faker.string.uuid(),
     name: faker.finance.accountName(),

@@ -13,13 +13,13 @@
   gap: 8px;
 }
 
-.barRight {
+.controls {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.search {
+.searchLabel {
   display: flex;
   align-items: center;
   gap: 8px;

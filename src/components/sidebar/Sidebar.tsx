@@ -1,5 +1,6 @@
+import clsx from 'clsx';
+
 import Logo from '../logo/Logo';
-import s from './Sidebar.module.css';
 import SidebarMenu from './menu/SidebarMenu';
 
 import ChevronLeft from '../../icons/ChevronLeft';
@@ -14,63 +15,82 @@ import Gear from '../../icons/Gear';
 import Headphone01 from '../../icons/Headphone01';
 import LogOut05 from '../../icons/LogOut05';
 
-type SidebarProps = {
+import styles from './Sidebar.module.css';
+import type { MenuItem } from './menu/MenuItem';
+
+interface SidebarProps {
   expanded: boolean;
   onToggle: () => void;
-};
+}
 
+const MAIN_MENU: MenuItem[] = [
+  { to: '/dashboard', label: 'Dashboard', icon: Home08 },
+  { to: '/transactions', label: 'Transactions', icon: CreditCardArrowRight },
+  { to: '/invoices', label: 'Invoices', icon: Receipt02 },
+  { to: '/wallets', label: 'Wallets', icon: Wallet06 },
+];
+
+const WORKFLOW_MENU: MenuItem[] = [
+  { to: '/transfer', label: 'Transfer', icon: CurrencyDollarCircle },
+  { to: '/pay-bill', label: 'Pay Bill', icon: CreditCardUpload },
+  { to: '/deposit', label: 'Deposit', icon: Safe03 },
+]
+
+const UTIL_MENU: MenuItem[] = [
+  { to: '/settings', label: 'Settings', icon: Gear },
+  { to: '/help-center', label: 'Help & Center', icon: Headphone01 },
+  { to: '/logout', label: 'Logout', icon: LogOut05, iconColor: 'danger' },
+];
 export default function Sidebar({ expanded, onToggle }: SidebarProps) {
+  const regionId = 'app-sidebar-region';
+
   return (
-    <aside className={`${s.sidebar_container} ${expanded ? "" : s.collapsed}`} aria-expanded={expanded}>
-      <div className={s.sidebar_header}>
-        <div className={s.sidebar_logoTitle}>
-          <Logo />
-          <h5 className={s.title}>Quicken</h5>
+    <aside
+      className={clsx(styles.sidebar_container, { [styles.collapsed]: !expanded })}
+      role='complementary'
+      aria-labelledby='sidebar-title'
+    >
+      <div className={styles.sidebar_header}>
+        <div className={styles.sidebar_logoTitle}>
+          <Logo aria-hidden />
+          <h5 className={styles.title}>Quicken</h5>
         </div>
 
         <button
+          type='button'
           onClick={onToggle}
-          className={s.sidebar_collapseBtn}
-          aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
-          aria-pressed={!expanded}
+          className={styles.sidebar_collapseBtn}
+          aria-label={expanded ? 'Collapse sidebar' : 'Expand sidebar'}
+          aria-expanded={expanded}
+          aria-controls={regionId}
         >
-          <ChevronLeft className={expanded ? "" : s.rotated} />
+          <ChevronLeft className={clsx({ [styles.rotated]: !expanded })} aria-hidden />
         </button>
       </div>
 
-      <hr className={s.divider} />
+      <hr className={styles.divider} />
 
-      <div className={s.sidebar_menu}>
-        <SidebarMenu
-          headerTitle="MAIN MENU"
-          collapsed={!expanded}
-          menuItems={[
-            { to: '/dashboard', label: 'Dashboard', icon: Home08 },
-            { to: '/transactions', label: 'Transactions', icon: CreditCardArrowRight },
-            { to: '/invoices', label: 'Invoices', icon: Receipt02 },
-            { to: '/wallets', label: 'Wallets', icon: Wallet06 },
-          ]}
-        />
+      <nav id={regionId} aria-label='Primary'>
+        <div className={styles.sidebar_menu}>
+          <SidebarMenu
+            headerTitle="MAIN MENU"
+            collapsed={!expanded}
+            menuItems={MAIN_MENU}
+          />
 
-        <SidebarMenu
-          headerTitle="WORKFLOW"
-          collapsed={!expanded}
-          menuItems={[
-            { to: '/transfer', label: 'Transfer', icon: CurrencyDollarCircle },
-            { to: '/pay-bill', label: 'Pay Bill', icon: CreditCardUpload },
-            { to: '/deposit', label: 'Deposit', icon: Safe03 },
-          ]}
-        />
+          <SidebarMenu
+            headerTitle="WORKFLOW"
+            collapsed={!expanded}
+            menuItems={WORKFLOW_MENU}
+          />
 
-        <SidebarMenu
-          collapsed={!expanded}
-          menuItems={[
-            { to: '/settings', label: 'Settings', icon: Gear },
-            { to: '/help-center', label: 'Help & Center', icon: Headphone01 },
-            { to: '/Logout', label: 'Logout', icon: LogOut05, iconColor: 'danger' },
-          ]}
-        />
-      </div>
+          <SidebarMenu
+            collapsed={!expanded}
+            menuItems={UTIL_MENU}
+          />
+        </div>
+      </nav>
+
     </aside>
   );
 }

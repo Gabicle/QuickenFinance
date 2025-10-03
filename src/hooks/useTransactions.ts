@@ -1,73 +1,87 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { accKeys, txKeys } from '../api/keys';
-import { type ListParams, listTransactions, getTransaction, createTransaction, updateTransaction, deleteTransaction, listAccounts } from '../api/transactions';
+import {
+  type ListParams,
+  listTransactions,
+  getTransaction,
+  createTransaction,
+  updateTransaction,
+  deleteTransaction,
+  listAccounts,
+} from '../api/transactions';
 import type { Transaction } from '../features/transactions/model/transaction';
-import type { Page } from '../mocks/store';
+import { useEffect } from 'react';
 
+const STALE_MS = 10_000;
 
 export function useTransactions(params: ListParams) {
-  return useQuery({
+    const queryClient = useQueryClient();
+
+
+  const query =  useQuery({
     queryKey: txKeys.list(params),
-    queryFn: () => listTransactions(params),
+    queryFn: ({signal}) => listTransactions(params, {signal}),
     placeholderData: keepPreviousData,
-    staleTime: 10_000,
+    staleTime: STALE_MS,
   });
+
+
+  useEffect(() => {
+    if (query.isPlaceholderData) return;
+    const nextPage = query.data?.nextPage;
+    if (nextPage) {
+      const nextParams = { ...params, page: nextPage };
+      queryClient.prefetchQuery({
+        queryKey: txKeys.list(nextParams),
+        queryFn: ({signal}) => listTransactions(nextParams, {signal}),
+        staleTime: STALE_MS,
+      });
+    }});
+
+
+  return query;
+ 
 }
 
 export function useTransaction(id: string) {
   return useQuery({
     queryKey: txKeys.detail(id),
     queryFn: () => getTransaction(id),
+    enabled: Boolean(id),
+    staleTime: STALE_MS,
   });
 }
 
 export function useCreateTransaction(listParams: ListParams) {
-  const qc = useQueryClient();
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: createTransaction,
+    mutationFn: (input: Partial<Transaction>) => createTransaction(input),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: txKeys.list(listParams) });
+      queryClient.invalidateQueries({ queryKey: txKeys.list(listParams) });
     },
   });
 }
 
-export function useUpdateTransaction(id: string) {
-  const qc = useQueryClient();
+export function useUpdateTransaction(id: string, listParams?: ListParams) {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (patch: Partial<Transaction>) => updateTransaction(id, patch),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: txKeys.detail(id) });
-      qc.invalidateQueries({ queryKey: txKeys.all });
+      if (listParams) queryClient.invalidateQueries({ queryKey: txKeys.list(listParams) });
+      queryClient.invalidateQueries({ queryKey: txKeys.detail(id) });
     },
   });
 }
 
-export function useDeleteTransaction(id: string, listParams: ListParams) {
-  const qc = useQueryClient();
+export function useDeleteTransaction(listParams: ListParams) {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: () => deleteTransaction(id),
-    onMutate: async () => {
-      await qc.cancelQueries({ queryKey: txKeys.list(listParams) });
-      const key = txKeys.list(listParams);
-      const prev = qc.getQueryData<Page<Transaction>>(key);
-      if (prev) {
-        qc.setQueryData<Page<Transaction>>(key, {
-          ...prev,
-          data: prev.data.filter(t => t.id !== id),
-          total: Math.max(0, prev.total - 1),
-        });
-      }
-      return { key, prev };
-    },
-    onError: (_e, _v, ctx) => {
-      if (ctx?.key && ctx.prev) (qc.setQueryData as any)(ctx.key, ctx.prev);
-    },
-    onSettled: () => {
-      qc.invalidateQueries({ queryKey: txKeys.all });
+    mutationFn: (id: string) => deleteTransaction(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: txKeys.list(listParams) });
     },
   });
 }
-
 
 export function useAccounts() {
   return useQuery({
@@ -77,7 +91,6 @@ export function useAccounts() {
       const totalBalance = accounts.reduce((sum, a) => sum + a.balance, 0);
       return { accounts, totalBalance };
     },
+    staleTime: STALE_MS,
   });
 }
-
-

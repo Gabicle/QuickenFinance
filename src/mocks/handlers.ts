@@ -1,8 +1,8 @@
 import { http, HttpResponse, delay } from "msw";
 import { TransactionStore } from "./store";
 import type { TransactionStatus } from "../features/transactions/model/transaction";
+import { makeUser } from "./transactions/fake";
 
-const DEMO_USER = { id: 1, email: "demo@example.com", name: "Demo User" };
 export const txStore = new TransactionStore(90);
 
 
@@ -10,21 +10,35 @@ export const handlers = [
   // Always return the demo user — no login required
   http.get("/api/me", async () => {
     await delay(200);
-    return HttpResponse.json(DEMO_USER);
+    const user = makeUser();
+    return HttpResponse.json(user);
   }),
 
-
-  http.get('/api/transactions', async ({ request }) => {
-    await delay(200);
-    const url = new URL(request.url);
-    const page = Number(url.searchParams.get('page') ?? 1);
-    const pageSize = Number(url.searchParams.get('pageSize') ?? 10);
-    const q = url.searchParams.get('q') ?? '';
+http.get('/api/transactions', async ({ request }) => {
+  await delay(200);
+  const url = new URL(request.url);
+  const page = Number(url.searchParams.get('page') ?? 1);
+  const pageSize = Number(url.searchParams.get('pageSize') ?? 10);
+  const q = url.searchParams.get('q') ?? '';
   const status = url.searchParams.get('status') as TransactionStatus | undefined;
-    const type = url.searchParams.get('type') ?? undefined;
-    const sort = (url.searchParams.get('sort') as 'date' | '-date' | null) ?? '-date';
-    return HttpResponse.json(txStore.list({ page, pageSize, q, status, type, sort }));
-  }),
+  const type = url.searchParams.get('type') ?? undefined;
+  const sort = (url.searchParams.get('sort') as 'date' | '-date' | null) ?? '-date';
+
+  const result = txStore.list({ page, pageSize, q, status, type, sort });
+  const totalPages = Math.max(1, Math.ceil(result.total / result.pageSize));
+  const hasMore = result.page < totalPages;
+  const nextPage = hasMore ? result.page + 1 : null;
+  const hasPrev = result.page > 1;
+  const prevPage = hasPrev ? result.page - 1 : null;
+
+  return HttpResponse.json({
+    ...result,
+    hasMore,
+    nextPage,
+    hasPrev,
+    prevPage,
+  });
+}),
 
   http.get('/api/transactions/:id', async ({ params }) => {
     await delay(120);

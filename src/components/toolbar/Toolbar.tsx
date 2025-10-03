@@ -26,8 +26,8 @@ export default function Toolbar({
         </p>
       </div>
 
-      <div className={styles.barRight}>
-        <label className={styles.search}>
+      <div className={styles.controls}>
+        <label className={styles.searchLabel}>
           <span className={styles.searchIcon} aria-hidden="true">
             <span className={styles.searchGlyph} />
           </span>

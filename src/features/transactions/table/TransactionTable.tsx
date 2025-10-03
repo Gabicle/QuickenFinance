@@ -61,11 +61,11 @@ export default function TransactionsTable() {
 
   const { data, isFetching, isLoading, isError } = useTransactions(params);
   const rows = data?.data ?? [];
-  const total = data?.total ?? 0;
+  const page = data?.page ?? params.page ?? 1;
   const pageSize = data?.pageSize ?? params.pageSize ?? 10;
-  const page = params.page ?? 1;
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
-
+  const totalPages = data?.totalPages ?? 1;
+  const hasNext = data?.hasMore ?? page < totalPages;
+  const hasPrev = data?.hasPrev ?? page > 1;
 
   const dateFormatter = useMemo(
     () => new Intl.DateTimeFormat(undefined, dateFormat),
@@ -156,9 +156,11 @@ export default function TransactionsTable() {
 
   // Pagination handlers
   const goPrev = () =>
-    setParams((p) => ({ ...p, page: Math.max(1, (p.page ?? 1) - 1) }));
+    setParams((p) => ({ ...p, page: data?.prevPage ?? Math.max(1, (p.page ?? 1) - 1) }));
+
   const goNext = () =>
-    setParams((p) => ({ ...p, page: Math.min(totalPages, (p.page ?? 1) + 1) }));
+    setParams((p) => ({ ...p, page: data?.nextPage ?? Math.min(totalPages, (p.page ?? 1) + 1) }));
+
 
 
   return (
