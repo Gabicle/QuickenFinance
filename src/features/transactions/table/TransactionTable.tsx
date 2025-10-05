@@ -20,13 +20,28 @@ const statusLabelMap: Record<TransactionStatus, string> = {
   failed: "Failed",
 };
 
-type TransactionTableProps = {
+type BaseProps = {
   rows: Transaction[];
+  search: string;
+  onSearchChange: (v: string) => void;
   isLoading?: boolean;
   isError?: boolean;
   isFetching?: boolean;
-  search: string;
-  onSearchChange: (v: string) => void;
+  maxRows?: number;
+
+
+}
+
+type CompactProps = BaseProps & {
+  compact: true;
+  page?: never;
+  pageSize?: never;
+  totalPages?: never;
+  onPrev?: never;
+  onNext?: never;
+};
+type FullProps = BaseProps & {
+  compact?: false;
   page: number;
   pageSize: number;
   totalPages: number;
@@ -34,29 +49,27 @@ type TransactionTableProps = {
   onNext: () => void;
 };
 
+export type TransactionTableProps = CompactProps | FullProps;
+
+
 const columnHelper = createColumnHelper<Transaction>();
 
-export default function TransactionsTable({
-  rows,
-  isLoading,
-  isError,
-  isFetching,
-  search,
-  onSearchChange,
-  page,
-  pageSize,
-  totalPages,
-  onPrev,
-  onNext,
-}: TransactionTableProps) {
+const dateFormat: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "short",
+  day: "2-digit"
+};
 
-  const title = "Recent Transactions";
 
-  const dateFormat: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "short",
-    day: "2-digit"
-  };
+
+const getSignedAmount = (t: Transaction) =>
+  t.type === 'expense' ? -Math.abs(t.amount.amount) : Math.abs(t.amount.amount);
+
+
+
+
+export default function TransactionsTable(props: TransactionTableProps) {
+  const isFull = props.compact !== true;
 
   const dateFormatter = useMemo(
     () => new Intl.DateTimeFormat(undefined, dateFormat),
@@ -80,10 +93,6 @@ export default function TransactionsTable({
     },
     [currencyFormatters]
   );
-
-  const getSignedAmount = (t: Transaction) =>
-    t.type === 'expense' ? -Math.abs(t.amount.amount) : Math.abs(t.amount.amount);
-
 
   // Columns
   const columns = useMemo(
@@ -136,30 +145,42 @@ export default function TransactionsTable({
     [dateFormatter, formatCurrency]
   );
 
-  // Table
+  const {
+    rows,
+    isLoading,
+    isError,
+    isFetching,
+    maxRows = 3,
+  } = props;
+
+  const title = "Recent Transactions";
+
+
+  const displayRows = useMemo(() => {
+    if (isFull) return rows;
+    return [...rows].sort((a, b) => +new Date(b.date) - +new Date(a.date)).slice(0, maxRows);
+  }, [rows, isFull, maxRows]);
+
+  const tableState = isFull
+    ? { globalFilter: props.search, pagination: { pageIndex: props.page - 1, pageSize: props.pageSize } }
+    : { globalFilter: props.search };
+
   const table = useReactTable({
-    data: rows,
+    data: displayRows,
     columns,
-    state: {
-      globalFilter: search,
-      pagination: {
-        pageIndex: page - 1,
-        pageSize,
-      },
-    },
-    manualPagination: true,
-    pageCount: totalPages,
+    state: tableState as any,
+    manualPagination: isFull,
+    pageCount: isFull ? props.totalPages : 1,
     getCoreRowModel: getCoreRowModel(),
   });
-
 
   return (
     <section className={styles.section} aria-labelledby="recent-transactions-title">
       {/* Toolbar */}
       <Toolbar
         title={title}
-        search={search}
-        onSearchChange={onSearchChange}
+        search={props.search}
+        onSearchChange={props.onSearchChange}
       />
 
       {/* Table */}
@@ -216,17 +237,23 @@ export default function TransactionsTable({
       </div>
 
       {/* Pagination */}
-      <Pagination
-        page={page}
-        totalPages={totalPages}
-        onPrev={onPrev}
-        onNext={onNext}
-        isFetching={isFetching}
-      />
+
+      {isFull && (
+        <Pagination
+          page={props.page}
+          totalPages={props.totalPages}
+          onPrev={props.onPrev}
+          onNext={props.onNext}
+          isFetching={isFetching}
+        />
+      )}
+
     </section>
   );
 
 }
 
 
-
+function isFullProps(p: TransactionTableProps): p is FullProps {
+  return !p.compact;
+}

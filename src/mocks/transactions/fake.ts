@@ -123,7 +123,10 @@ const statusBias = forceType === "expense"
   const tx: Transaction = {
     id: faker.string.uuid(),
     description,
-    date: faker.date.recent({ days: 70 }).toISOString(),
+     date: faker.date.between({
+     from: new Date(new Date().getFullYear(), 0, 1),
+     to: new Date(), 
+    }).toISOString(),
     account,
     type: forceType,
     status,
@@ -145,6 +148,6 @@ const statusBias = forceType === "expense"
 export function makeAccounts(n = 3): Account[] {
   return Array.from({ length: n }, () => makeAccount());
 }
-export function makeTransactions(accounts: Account[], n = 20): Transaction[] {
+export function makeTransactions(accounts: Account[], n = 120): Transaction[] {
   return Array.from({ length: n }, () => makeTransaction(accounts));
 }

@@ -13,42 +13,68 @@ import type { Transaction } from '../features/transactions/model/transaction';
 import { useEffect } from 'react';
 
 const STALE_MS = 10_000;
+const GC_MS = 5 * 60_000;
 
 export function useTransactions(params: ListParams) {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-
-  const query =  useQuery({
+  const query = useQuery({
     queryKey: txKeys.list(params),
-    queryFn: ({signal}) => listTransactions(params, {signal}),
+    queryFn: ({ signal }) => listTransactions(params, { signal }),
     placeholderData: keepPreviousData,
     staleTime: STALE_MS,
+    gcTime: GC_MS,
+   
   });
 
 
   useEffect(() => {
     if (query.isPlaceholderData) return;
-    const nextPage = query.data?.nextPage;
+    const nextPage = query.data?.nextPage ?? null;
     if (nextPage) {
       const nextParams = { ...params, page: nextPage };
       queryClient.prefetchQuery({
         queryKey: txKeys.list(nextParams),
-        queryFn: ({signal}) => listTransactions(nextParams, {signal}),
+        queryFn: ({ signal }) => listTransactions(nextParams, { signal }),
         staleTime: STALE_MS,
+        gcTime: GC_MS,
       });
-    }});
+    }
 
+    // Optional: prefetch previous page for snappy "back" nav
+    const prevPage = query.data?.prevPage ?? null;
+    if (prevPage) {
+      const prevParams = { ...params, page: prevPage };
+      queryClient.prefetchQuery({
+        queryKey: txKeys.list(prevParams),
+        queryFn: ({ signal }) => listTransactions(prevParams, { signal }),
+        staleTime: STALE_MS,
+        gcTime: GC_MS,
+      });
+    }
+  }, [
+    query.isPlaceholderData,
+    query.data?.nextPage,
+    query.data?.prevPage,
+    params.page,
+    params.pageSize,
+    params.q,
+    params.status,
+    params.type,
+    params.sort,
+    queryClient,
+  ]);
 
   return query;
- 
 }
 
 export function useTransaction(id: string) {
   return useQuery({
     queryKey: txKeys.detail(id),
-    queryFn: () => getTransaction(id),
+    queryFn: ({ signal }) => getTransaction(id, { signal }),
     enabled: Boolean(id),
     staleTime: STALE_MS,
+    gcTime: GC_MS,
   });
 }
 
@@ -57,6 +83,7 @@ export function useCreateTransaction(listParams: ListParams) {
   return useMutation({
     mutationFn: (input: Partial<Transaction>) => createTransaction(input),
     onSuccess: () => {
+     
       queryClient.invalidateQueries({ queryKey: txKeys.list(listParams) });
     },
   });
@@ -67,7 +94,10 @@ export function useUpdateTransaction(id: string, listParams?: ListParams) {
   return useMutation({
     mutationFn: (patch: Partial<Transaction>) => updateTransaction(id, patch),
     onSuccess: () => {
-      if (listParams) queryClient.invalidateQueries({ queryKey: txKeys.list(listParams) });
+      if (listParams) {
+       
+        queryClient.invalidateQueries({ queryKey: txKeys.list(listParams) });
+      }
       queryClient.invalidateQueries({ queryKey: txKeys.detail(id) });
     },
   });
@@ -86,11 +116,12 @@ export function useDeleteTransaction(listParams: ListParams) {
 export function useAccounts() {
   return useQuery({
     queryKey: accKeys.list(),
-    queryFn: () => listAccounts(),
+    queryFn: ({ signal }) => listAccounts({ signal }),
     select: (accounts) => {
-      const totalBalance = accounts.reduce((sum, a) => sum + a.balance, 0);
+      const totalBalance = accounts.reduce((sum, a) => sum + (a?.balance ?? 0), 0);
       return { accounts, totalBalance };
     },
     staleTime: STALE_MS,
+    gcTime: GC_MS,
   });
 }

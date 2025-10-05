@@ -72,7 +72,7 @@ export default function Transactions() {
 
 
 
-const useDebouncedValue = (value: string, delay = 300) => {
+export const useDebouncedValue = (value: string, delay = 300) => {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
     const id = setTimeout(() => setDebounced(value), delay);

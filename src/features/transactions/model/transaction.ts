@@ -37,7 +37,7 @@ export type Transaction = {
   description: string;   
   date: string;           
   account: Account;         
-  type: "income" | "expense"  //to remove
+  type: "income" | "expense"  
   status: TransactionStatus;
   amount: Amount;           
   category: string;         
