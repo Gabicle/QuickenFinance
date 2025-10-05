@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import s from './Card.module.css';
 import Icon from "../icon/Icon";
+import { formatAmount } from "../../utils/currency";
+import { formatPercent } from "../../utils/formatPercent";
+import Badge, { type BadgeVariant } from "../badge/Badge";
 
 type CardProps = {
   header: string;
@@ -10,13 +13,7 @@ type CardProps = {
 }
 
 export default function Card({ header, headerIcon, aggregate, footer }: CardProps) {
-  const formatted = new Intl.NumberFormat(undefined, {
-    style: "currency",
-    currency: "EUR",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(aggregate);
-
+  const formatted = formatAmount(aggregate);
 
   return (
     <div className={s.card}>
@@ -36,38 +33,29 @@ export default function Card({ header, headerIcon, aggregate, footer }: CardProp
 }
 
 
-const locale = "fr-FR"; // gives 8,2 % and €1 234,56
+
 
 export function makeFooterNode(current: number, previous: number) {
   const delta = current - previous;
   const pct = previous === 0
-    ? (current === 0 ? 0 : 1) // treat as +100% when growing from 0
-    : (current - previous) / Math.abs(previous);
+    ? (current === 0 ? 0 : 1)
+    : delta / Math.abs(previous);
 
   const isUp = delta > 0;
   const isDown = delta < 0;
 
-  const pctStr = new Intl.NumberFormat(locale, {
-    style: "percent",
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
-    signDisplay: "exceptZero",
-  }).format(pct);
+  const pctStr = formatPercent(pct);
+  const deltaStr = `${delta >= 0 ? "+" : "−"}${formatAmount(Math.abs(delta))}`;
 
-  const money = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: "EUR",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
 
-  const deltaStr = `${delta >= 0 ? "+" : "−"}${money.format(Math.abs(delta))}`;
-
-  const badgeClass = isDown ? s.badgeDown : isUp ? s.badgeUp : s.badgeNeutral;
+  let variant: BadgeVariant = "neutral";
+  if (isUp) variant = "success";
+  if (isDown) variant = "danger";
 
   return (
     <>
-      <span className={`text-xs-bold ${s.badge} ${badgeClass}`}>{pctStr}</span>
+      <Badge variant={variant}>{pctStr}</Badge>
+
       <span className={`text-sm-md ${s.caption}`}>{deltaStr} from last month</span>
     </>
   );

@@ -13,23 +13,24 @@
 }
 
 .badgeWarning {
-  background: #fff4e5;
-  color: #8a5a00;
+  background: var(--color-alert-warning-0);
+  color: var(--color-secondary-700);
 }
 
 .badgeDanger {
-  border: 1px solid var(--color-alert-error-500);
+  border: 1px solid var(--color-alert-error-300);
   background-color: var(--color-alert-error-0);
-  color: var(--color-alert-error-500);
+  color: var(--color-alert-error-300);
 
 }
 
 .badgeNeutral {
-  background: #f2f4f7;
-  color: #344054;
+  background: var(--color-greyscale-25);
+  color: var(--color-greyscale-600);
 }
 
+
 .badgeInfo {
-  background: #eef4ff;
-  color: #1c4ed8;
+  background: var(--color-sky-0);
+  color: var(--color-sky-200);
 }

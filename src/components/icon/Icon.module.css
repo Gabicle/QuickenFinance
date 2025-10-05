@@ -4,17 +4,21 @@
   vertical-align: middle;
 }
 
-/* sizes */
+.xs {
+  font-size: var(--icon-xs);
+}
+
 .sm {
-  font-size: 16px;
+  font-size: var(--icon-sm);
 }
 
 .md {
-  font-size: 20px;
+  font-size: var(--icon-md);
 }
 
 .lg {
-  font-size: 24px;
+  font-size: var(--icon-lg);
+
 }
 
 /* colors */

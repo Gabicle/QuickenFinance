@@ -26,7 +26,7 @@ export default function Toolbar({
         </p>
       </div>
 
-      <div className={styles.controls}>
+      {/* <div className={styles.controls}>
         <label className={styles.searchLabel}>
           <span className={styles.searchIcon} aria-hidden="true">
             <span className={styles.searchGlyph} />
@@ -51,7 +51,7 @@ export default function Toolbar({
             <span className={styles.iconSquareSmall} />
           </span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

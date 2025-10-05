@@ -4,7 +4,7 @@ import clsx from "clsx";
 import styles from "./Icon.module.css";
 
 export type Glyph = ComponentType<SVGProps<SVGSVGElement>>;
-type Size = "sm" | "md" | "lg";
+type Size = "xs" | "sm" | "md" | "lg";
 export type Color = "brand" | "danger" | "muted" | "inherit" | "white";
 
 type DecorativeProps = {
@@ -28,7 +28,7 @@ type IconProps = BaseProps & (DecorativeProps | NonDecorativeProps);
 const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
   {
     glyph: GlyphComp,
-    size = "md",
+    size = "sm",
     color = "inherit",
     decorative = true,
     title,

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button } from '../../components/button/Button';
 import Card from '../../components/card/Card';
 import { useAccounts, useTransactions } from '../../hooks/useTransactions';
@@ -7,17 +7,18 @@ import Title from '../../layout/Title';
 import TransactionTable from './table/TransactionTable';
 import s from './Transactions.module.css';
 import { aggregateAccounts, onAddTransaction, onRecurring } from './utitlity';
-
+import { splitBuckets } from '../../utils/transactions';
+import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 
 export default function Transactions() {
   const title = 'Transactions';
 
   const { data: accountsData } = useAccounts();
-  const { accounts, totalBalance } = accountsData ?? { accounts: [], totalBalance: 0 };
+  const { totalBalance } = accountsData ?? { accounts: [], totalBalance: 0 };
 
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const debouncedSearch = useDebouncedValue(search, 300);
 
   const { data, isFetching, isLoading, isError } = useTransactions({
@@ -36,6 +37,16 @@ export default function Transactions() {
     setPage(1);
   }, [debouncedSearch]);
 
+  const { earnings, spendings, investment } = useMemo(() => {
+    try {
+      return splitBuckets(rows);
+    } catch {
+      return { earnings: 0, spendings: 0, investment: 0 };
+    }
+  }, [rows]);
+
+  const totalIncome = earnings;
+  const totalExpense = spendings + investment;
 
   return (
     <div className="main-container">
@@ -45,9 +56,9 @@ export default function Transactions() {
       </Title>
 
       <div className={s.card_container}>
-        <Card header="Total Balance" headerIcon={undefined} aggregate={totalBalance} footer={undefined} />
-        <Card header="Total Income" headerIcon={undefined} aggregate={3928.41} footer={undefined} />
-        <Card header="Total Expense" headerIcon={undefined} aggregate={3928.41} footer={undefined} />
+        <Card header="Total Balance" aggregate={totalBalance} footer={null} />
+        <Card header="Total Income" aggregate={totalIncome} footer={null} />
+        <Card header="Total Expense" aggregate={totalExpense} footer={null} />
       </div>
 
       <TransactionTable
@@ -63,20 +74,8 @@ export default function Transactions() {
         onPrev={goPrev}
         onNext={goNext}
       />
-
-
     </div>
   );
 }
 
 
-
-
-export const useDebouncedValue = (value: string, delay = 300) => {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(id);
-  }, [value, delay]);
-  return debounced;
-};

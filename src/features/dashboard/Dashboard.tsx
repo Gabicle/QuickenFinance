@@ -7,13 +7,14 @@ import Title from "../../layout/Title";
 import { onAddTransaction } from "../transactions/utitlity";
 import styles from "./Dashboard.module.css";
 
-import { useDebouncedValue } from "../transactions/Transactions";
+
 import TransactionsTable from "../transactions/table/TransactionTable";
 import PiggyBank01 from "../../icons/PiggyBank01";
 
 import { useDashboardData } from "./hooks/useDashboardData";
 import DashboardMoneyFlow from "./charts/bar/DashboardMoneyFlow";
 import DashboardPie, { type RangeKey } from "./charts/pie/DashboardPie";
+import { useDebouncedValue } from "../../hooks/useDebouncedValue";
 
 export default function Dashboard() {
   const title = "Dashboard";

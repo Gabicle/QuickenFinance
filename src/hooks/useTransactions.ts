@@ -41,7 +41,6 @@ export function useTransactions(params: ListParams) {
       });
     }
 
-    // Optional: prefetch previous page for snappy "back" nav
     const prevPage = query.data?.prevPage ?? null;
     if (prevPage) {
       const prevParams = { ...params, page: prevPage };

@@ -15,12 +15,28 @@ type Props = {
 
   children: ReactNode;
   variant?: BadgeVariant;
+  size?: BadgeSize;
+
 }
+
+
+export type BadgeSize = "sm" | "md" | "lg";
+
+
+
 
 
 export default function Badge({
   children, variant = "neutral",
+  size = "sm",
+
 }: Props) {
+
+  const sizeClass = {
+    sm: "text-sm-md",
+    md: "text-md-md",
+    lg: "text-lg-md"
+  }[size];
 
   const variantClass = {
     success: styles.badgeSuccess,
@@ -33,7 +49,7 @@ export default function Badge({
 
 
   return (
-    <span className={clsx(styles.badge, variantClass)} >
+    <span className={clsx(styles.badge, variantClass, sizeClass)} >
       {children}
     </span>
   )

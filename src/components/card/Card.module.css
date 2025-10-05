@@ -34,41 +34,6 @@
 }
 
 
-/*TODO: Badge --to move everything below to separate component */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  padding: 3px 4px;
-  border-radius: 6px;
-
-  background: #EFFEFA;
-  border: 1px solid #339D88;
-
-  color: #339D88;
-  font-weight: 600;
-}
-
-/* badge base already present */
-.badgeUp {
-  background: #EFFEFA;
-  border-color: #339D88;
-  color: #339D88;
-}
-
-.badgeDown {
-  background: #FEEFEF;
-  border-color: #C73C3C;
-  color: #C73C3C;
-}
-
-.badgeNeutral {
-  background: #F5F6F8;
-  border-color: #DFE1E7;
-  color: #666D80;
-}
 
 
 /* Caption */

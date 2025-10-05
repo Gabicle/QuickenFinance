@@ -13,7 +13,7 @@ const statusVariantMap: Record<TransactionStatus, BadgeVariant> = {
   failed: "danger",
 };
 
-// map transaction status → display label
+
 const statusLabelMap: Record<TransactionStatus, string> = {
   completed: "Completed",
   pending: "Pending",
@@ -252,6 +252,3 @@ export default function TransactionsTable(props: TransactionTableProps) {
 }
 
 
-function isFullProps(p: TransactionTableProps): p is FullProps {
-  return !p.compact;
-}

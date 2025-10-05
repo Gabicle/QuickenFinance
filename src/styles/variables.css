@@ -117,15 +117,10 @@
   /* 32px */
 
 
-
-  --icon-base: 1rem;
-  /* ~16px by default */
-  --icon-sm: calc(var(--icon-base) * 2);
-  /* 32px */
-  --icon-md: calc(var(--icon-base) * 2.25);
-  /* 36px */
-  --icon-lg: calc(var(--icon-base) * 2.375);
-  /* 38px */
+  --icon-xs: 1rem;
+  --icon-sm: 1.25rem;
+  --icon-md: 1.5rem;
+  --icon-lg: 2.25rem;
 
 
 }
