@@ -1,0 +1,15 @@
+.moneyflow_wrapper {
+  position: relative;
+  width: 100%;
+
+  --chart-income-color: var(--color-primary-600);
+  --chart-expense-color: var(--color-alert-error-100);
+  --chart-bar-radius: 2;
+  --chart-group-gap: 10;
+  --chart-bar-width: 60;
+
+  --chart-mt: 20;
+  --chart-mr: 20;
+  --chart-mb: 48;
+  --chart-ml: 56;
+}

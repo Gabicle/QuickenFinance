@@ -1,0 +1,23 @@
+.pie_wrapper {
+  position: relative;
+  width: 100%;
+  --chart-mt: 20px;
+  --chart-mr: 20px;
+  --chart-mb: 16px;
+  --chart-ml: 16px;
+
+  --pie-legend-width: 160px;
+
+  --pie-color-1: var(--color-primary-600);
+  --pie-color-2: #10b981;
+  --pie-color-3: #f59e0b;
+  --pie-color-4: #ef4444;
+  --pie-color-5: #8b5cf6;
+  --pie-color-6: #06b6d4;
+  --pie-color-7: #84cc16;
+  --pie-color-8: #f97316;
+  --pie-color-9: #e11d48;
+  --pie-color-10: #14b8a6;
+  --pie-color-11: #3b82f6;
+  --pie-color-12: #a855f7;
+}

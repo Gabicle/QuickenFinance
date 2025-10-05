@@ -1,10 +1,38 @@
-.card_container {
+.cards {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-3);
 }
 
+.cards>* {
+  flex: 1 1 16rem;
+  min-width: 16rem;
+}
 
-.info {
+.contentGrid {
   display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
+  gap: var(--spacing-3);
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+}
+
+.range_row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 5px;
+}
+
+.range_label {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 26px;
+}
+
+.range_select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 12px;
 }
