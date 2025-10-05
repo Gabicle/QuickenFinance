@@ -186,9 +186,7 @@ export default function TransactionsTable(props: TransactionTableProps) {
       {/* Table */}
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
-          <caption id="recent-transactions-title" className={styles.sr_only}>
-            {title}
-          </caption>
+
           <thead>
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id}>

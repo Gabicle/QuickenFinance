@@ -13,6 +13,7 @@ import { useDebouncedValue } from "../transactions/Transactions";
 import TransactionsTable from "../transactions/table/TransactionTable";
 import PiggyBank01 from "../../icons/PiggyBank01";
 import DashboardPie from "./DashboardPie";
+import type { Transaction } from "../transactions/model/transaction";
 
 type Tx = Transaction;
 
@@ -173,36 +174,36 @@ export default function Dashboard() {
 
       </div>
 
-      <div>
-        <Widget
-          title="Money Flow"
-          icon={BankNote04}>
-          <DashboardMoneyFlow year={year} transactions={chartRows}
-          />
+      <Widget
+        title="Money Flow"
+        icon={BankNote04}>
+        <DashboardMoneyFlow year={year} transactions={chartRows}
+        />
 
 
-        </Widget>
+      </Widget>
+
+
+
+
+      <div className={s.info}>
+
+        {/* recent transactions table here */}
+        <TransactionsTable
+          compact
+          rows={recentRows}
+          isLoading={isLoadingRecent}
+          isError={isErrorRecent}
+          isFetching={isFetchingRecent}
+          search={search}
+          onSearchChange={setSearch}
+          maxRows={3}
+        />
 
         <Widget title="Spending Breakdown" icon={PiggyBank01}>
           <DashboardPie transactions={chartRows} />
         </Widget>
       </div>
-
-
-
-      {/* recent transactions table here */}
-      <TransactionsTable
-        compact
-        rows={recentRows}
-        isLoading={isLoadingRecent}
-        isError={isErrorRecent}
-        isFetching={isFetchingRecent}
-        search={search}
-        onSearchChange={setSearch}
-        maxRows={3}
-      />
-
-
     </div>
 
   )

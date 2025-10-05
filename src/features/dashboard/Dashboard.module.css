@@ -2,3 +2,9 @@
   display: flex;
   gap: var(--spacing-3);
 }
+
+
+.info {
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+}
