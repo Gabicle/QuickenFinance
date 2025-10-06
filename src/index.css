@@ -72,7 +72,7 @@ input {
 }
 
 p {
-  letter-spacing: 0.32px;
+  letter-spacing: var(--lh-normal);
 }
 
 
@@ -207,36 +207,3 @@ p {
 .color-warning {
   color: var(--color-warning)
 }
-
-/* table {
-  width: 100%;
-}
-
-thead {
-  background-color: var(--color-greyscale-25);
-}
-
-th {
-  text-align: left;
-}
-
-tbody {
-  color: var(--color-greyscale-900);
-  padding: 0 10px;
-}
-
-td {
-  border-bottom: 1px solid var(--color-border);
-}
-
-.table-container {
-  border: 1px solid var(--color-border);
-}
-
-.table-toolbar {
-  padding: 8px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--color-border);
-} */

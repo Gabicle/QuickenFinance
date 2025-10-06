@@ -1,71 +1,60 @@
-:root {
-  --text-muted: #666D80;
-  --text-default: #1A1C21;
-  --outline-weak: #DFE1E7;
-  --outline-mid: #818898;
-  --bg: #ffffff;
-  --badge-green: #0BA36A;
-  --badge-amber: #B26B00;
-}
-
 .section {
   width: 100%;
 }
 
-/* Table */
 .tableWrapper {
-  border: 1px solid var(--outline-weak);
-  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-0);
   overflow: hidden;
-  margin: 10px 0;
+  margin: var(--spacing-2) 0;
 }
 
 .table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  background: var(--bg);
+  background: var(--color-greyscale-0);
 }
 
 .th {
   text-align: left;
-  background: #fafbfc;
-  border-bottom: 1px solid var(--outline-weak);
-  padding: 12px 16px;
-  font: 600 12px/16px system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  color: var(--text-muted);
+  background: var(--color-greyscale-25);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-xs);
+  line-height: 1rem;
+  font-family: var(--font-family);
+  color: var(--color-greyscale-500);
   letter-spacing: 0.2px;
 }
 
-
 .td {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--outline-weak);
-  font: 500 14px/20px system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  color: var(--text-default);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-bottom: 1px solid var(--color-border);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-sm);
+  line-height: 1.25rem;
+  font-family: var(--font-family);
+  color: var(--color-greyscale-900);
 }
 
 .empty {
   text-align: center;
-  padding: 28px;
-  color: var(--text-muted);
+  padding: var(--spacing-5);
+  color: var(--color-greyscale-500);
 }
 
-.mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-}
 
-/* Amount coloring */
+
 .negative {
-  color: #B00020;
+  color: var(--color-danger);
 }
 
 .positive {
-  color: #0B8A2E;
+  color: var(--color-success);
 }
 
-
-/* Visually hidden (for caption) */
 .sr_only {
   position: absolute !important;
   height: 1px;

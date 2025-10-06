@@ -1,34 +1,31 @@
 .widget_container {
   display: flex;
   flex-direction: column;
-  border-radius: 12px;
+  border-radius: var(--radius-1);
   border: 1px solid var(--color-border);
   background-color: var(--color-greyscale-0);
   box-shadow: var(--shadow-xs);
 }
 
 .widget_header {
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 var(--spacing-4);
   border-bottom: 1px solid var(--color-border);
-
 }
-
 
 .widget_header_title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-1);
 }
 
 .widget_actions {
   display: flex;
-  gap: 8px;
+  gap: var(--spacing-1);
 }
 
 .widget_content {
-  padding: 20px;
+  padding: var(--spacing-4);
 }

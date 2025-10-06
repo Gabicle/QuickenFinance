@@ -21,7 +21,7 @@ export default function Toolbar({
         <div className={styles.iconBox} aria-hidden="true">
           <div className={styles.iconSquare} />
         </div>
-        <p id="recent-transactions-title" className='text-lg-md'>
+        <p id="recent-transactions-title" className='text-md-md'>
           {title}
         </p>
       </div>

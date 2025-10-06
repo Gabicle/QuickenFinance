@@ -6,7 +6,7 @@ import { useAccounts, useTransactions } from '../../hooks/useTransactions';
 import Title from '../../layout/Title';
 import TransactionTable from './table/TransactionTable';
 import s from './Transactions.module.css';
-import { aggregateAccounts, onAddTransaction, onRecurring } from './utitlity';
+import { onAddTransaction, onRecurring } from './utitlity';
 import { splitBuckets } from '../../utils/transactions';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 
@@ -51,8 +51,16 @@ export default function Transactions() {
   return (
     <div className="main-container">
       <Title title={title}>
-        <Button text="Recurring" classes="btn btn-secondary btn-sm" handleClick={onRecurring} />
-        <Button text="Add Transaction" classes="btn btn-primary btn-sm" handleClick={onAddTransaction} />
+        <Button
+          text="Recurring"
+          classes="btn btn-secondary btn-sm"
+          handleClick={onRecurring}
+        />
+        <Button
+          text="Add Transaction"
+          classes="btn btn-primary btn-sm"
+          handleClick={onAddTransaction}
+        />
       </Title>
 
       <div className={s.card_container}>
@@ -61,21 +69,23 @@ export default function Transactions() {
         <Card header="Total Expense" aggregate={totalExpense} footer={null} />
       </div>
 
-      <TransactionTable
-        rows={rows}
-        isLoading={isLoading}
-        isError={isError}
-        isFetching={isFetching}
-        search={search}
-        onSearchChange={setSearch}
-        page={page}
-        pageSize={pageSize}
-        totalPages={totalPages}
-        onPrev={goPrev}
-        onNext={goNext}
-      />
+      <div className={s.table_scroll}>
+
+        <TransactionTable
+          className={`${s.responsive_table} ${s.sticky_header} ${s.sticky_first_col}`}
+          rows={rows}
+          isLoading={isLoading}
+          isError={isError}
+          isFetching={isFetching}
+          search={search}
+          onSearchChange={setSearch}
+          page={page}
+          pageSize={pageSize}
+          totalPages={totalPages}
+          onPrev={goPrev}
+          onNext={goNext}
+        />
+      </div>
     </div>
   );
 }
-
-

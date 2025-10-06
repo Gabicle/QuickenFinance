@@ -1,11 +1,10 @@
 .menu_container {
-  padding: 0.25rem 0.75rem;
+  padding: var(--spacing-0) var(--spacing-2);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--spacing-1);
   align-items: stretch;
 }
-
 
 .menu_items {
   display: flex;
@@ -16,9 +15,9 @@
 .menu_item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-0);
   width: 100%;
   box-sizing: border-box;
 }
@@ -30,10 +29,10 @@
 .icon {
   border-radius: var(--radius-0);
   color: var(--color-greyscale-500);
-
 }
 
-.active {
+
+.menu_item.active {
   border-radius: var(--radius-0);
   color: var(--color-greyscale-900);
   background-color: var(--color-primary-50);
@@ -43,18 +42,10 @@
   color: var(--color-danger);
 }
 
-
-
 .iconOnly {
   justify-content: center;
   width: 44px;
   margin-left: auto;
   margin-right: auto;
-  padding: 8px 0;
-}
-
-.active {
-  background: #F1ECFC;
-
-
+  padding: var(--spacing-1) 0;
 }

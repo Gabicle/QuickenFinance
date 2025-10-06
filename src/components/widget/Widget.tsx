@@ -19,7 +19,7 @@ export default function Widget({ title, icon, actions, children }: WidgetProps) 
         <div className={styles.widget_header_title}>
 
           {icon && <Icon size='lg' glyph={icon} />}
-          <span className='text-lg-md'>{title}</span>
+          <span className='text-md-md'>{title}</span>
         </div>
 
         <div className={styles.widget_actions}>
