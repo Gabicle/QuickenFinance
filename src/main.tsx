@@ -14,8 +14,17 @@ async function enableMocking() {
   await worker.start({
     onUnhandledRequest: 'bypass',
     serviceWorker: { url: '/mockServiceWorker.js' },
+    waitUntilReady: true,
+
 
   });
+
+  if (!navigator.serviceWorker.controller) {
+    await new Promise<void>((resolve) => {
+      navigator.serviceWorker.addEventListener('controllerchange', () => resolve(), { once: true });
+    });
+    window.location.reload();
+  }
 }
 
 enableMocking().then(() => {
