@@ -1,10 +1,9 @@
 import { http, HttpResponse, delay } from "msw";
 import { TransactionStore } from "./store";
-import type { TransactionStatus } from "../features/transactions/model/transaction";
+import type { Transaction, TransactionStatus } from "../features/transactions/model/transaction";
 import { makeUser } from "./transactions/fake";
 
 export const txStore = new TransactionStore(90);
-
 
 export const handlers = [
   // Always return the demo user — no login required
@@ -14,15 +13,18 @@ export const handlers = [
     return HttpResponse.json(user);
   }),
 
-http.get('/api/transactions', async ({ request }) => {
+ http.get("/api/transactions", async ({ request }) => {
   await delay(200);
   const url = new URL(request.url);
-  const page = Number(url.searchParams.get('page') ?? 1);
-  const pageSize = Number(url.searchParams.get('pageSize') ?? 10);
-  const q = url.searchParams.get('q') ?? '';
-  const status = url.searchParams.get('status') as TransactionStatus | undefined;
-  const type = url.searchParams.get('type') ?? undefined;
-  const sort = (url.searchParams.get('sort') as 'date' | '-date' | null) ?? '-date';
+  const page = Number(url.searchParams.get("page") ?? 1);
+  const pageSize = Number(url.searchParams.get("pageSize") ?? 10);
+  const q = url.searchParams.get("q") ?? "";
+  const status = url.searchParams.get("status") as TransactionStatus | undefined;
+
+  const rawType = url.searchParams.get("type");
+  const type = rawType === "income" || rawType === "expense" ? rawType : undefined;
+
+  const sort = (url.searchParams.get("sort") as "date" | "-date" | null) ?? "-date";
 
   const result = txStore.list({ page, pageSize, q, status, type, sort });
   const totalPages = Math.max(1, Math.ceil(result.total / result.pageSize));
@@ -40,38 +42,43 @@ http.get('/api/transactions', async ({ request }) => {
   });
 }),
 
-  http.get('/api/transactions/:id', async ({ params }) => {
+  http.get("/api/transactions/:id", async ({ params }) => {
     await delay(120);
     const item = txStore.get(String(params.id));
-    if (!item) return HttpResponse.json({ message: 'Not found' }, { status: 404 });
+    if (!item) {
+      return HttpResponse.json({ message: "Not found" }, { status: 404 });
+    }
     return HttpResponse.json(item);
   }),
 
-  http.post('/api/transactions', async ({ request }) => {
+  http.post("/api/transactions", async ({ request }) => {
     await delay(120);
-    const body = await request.json();
+    const body = (await request.json()) as Transaction; 
     const created = txStore.create(body);
     return HttpResponse.json(created, { status: 201 });
   }),
 
-  http.patch('/api/transactions/:id', async ({ params, request }) => {
+  http.patch("/api/transactions/:id", async ({ params, request }) => {
     await delay(120);
-    const body = await request.json();
+    const body = (await request.json()) as Partial<Transaction>; 
     const updated = txStore.update(String(params.id), body);
-    if (!updated) return HttpResponse.json({ message: 'Not found' }, { status: 404 });
+    if (!updated) {
+      return HttpResponse.json({ message: "Not found" }, { status: 404 });
+    }
     return HttpResponse.json(updated);
   }),
 
-  http.delete('/api/transactions/:id', async ({ params }) => {
+  http.delete("/api/transactions/:id", async ({ params }) => {
     await delay(100);
     const ok = txStore.delete(String(params.id));
-    if (!ok) return HttpResponse.json({ message: 'Not found' }, { status: 404 });
+    if (!ok) {
+      return HttpResponse.json({ message: "Not found" }, { status: 404 });
+    }
     return HttpResponse.json({ deleted: true });
   }),
 
-   http.get("/api/accounts", async () => {
+  http.get("/api/accounts", async () => {
     await delay(200);
     return HttpResponse.json(txStore.listAccounts());
   }),
-
 ];

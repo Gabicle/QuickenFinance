@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button } from "../../components/button/Button";
 import Card from "../../components/card/Card";
 import { useAccounts, useTransactions } from "../../hooks/useTransactions";
 
@@ -9,6 +8,7 @@ import s from "./Transactions.module.css";
 import { onAddTransaction, onRecurring } from "./utitlity";
 import { splitBuckets } from "../../utils/transactions";
 import { useDebouncedValue } from "../../hooks/useDebouncedValue";
+import Button from "../../components/button/Button";
 
 export default function Transactions() {
   const title = "Transactions";
@@ -52,16 +52,12 @@ export default function Transactions() {
   return (
     <div className="main-container">
       <Title title={title}>
-        <Button
-          text="Recurring"
-          classes="btn btn-secondary btn-sm"
-          handleClick={onRecurring}
-        />
-        <Button
-          text="Add Transaction"
-          classes="btn btn-primary btn-sm"
-          handleClick={onAddTransaction}
-        />
+        <Button className="btn btn-secondary btn-sm" onClick={onRecurring}>
+          Recurring
+        </Button>
+        <Button className="btn btn-primary btn-sm" onClick={onAddTransaction}>
+          Add Transaction
+        </Button>
       </Title>
 
       <div className={s.card_container}>

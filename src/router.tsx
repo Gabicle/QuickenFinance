@@ -1,9 +1,12 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 import PageLayout from "./layout/PageLayout";
-import DashboardPage from "./pages/DashboardPage";
+import { lazy } from "react";
 import NotFoundPage from "./pages/NotFoundPage";
 import ReportsPage from "./pages/ReportsPage";
 import TransactionsPage from "./pages/TransactionsPage";
+
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+
 
 export const router = createBrowserRouter([
   {

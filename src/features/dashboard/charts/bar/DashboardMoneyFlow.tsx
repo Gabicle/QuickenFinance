@@ -188,7 +188,7 @@ export default function DashboardMoneyFlow({
       .attr("width", barW)
       .attr("height", (d) => Math.max(0, y(0) - y(d.value)))
       .on("mousemove", onMove)
-      .on("mouseover", (event, d) => {
+      .on("mouseover", (_, d) => {
         tooltip
           .style("opacity", 1)
           .html(

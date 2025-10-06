@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "../../components/button/Button";
+
 import Card from "../../components/card/Card";
 import Widget from "../../components/widget/Widget";
 import BankNote04 from "../../icons/BankNote04";
@@ -16,6 +16,7 @@ import DashboardMoneyFlow from "./charts/bar/DashboardMoneyFlow";
 import DashboardPie, { type RangeKey } from "./charts/pie/DashboardPie";
 import { useDebouncedValue } from "../../hooks/useDebouncedValue";
 import CardFooter from "../../components/card/CardFooter";
+import Button from "../../components/button/Button";
 
 export default function Dashboard() {
   const title = "Dashboard";
@@ -31,8 +32,12 @@ export default function Dashboard() {
   return (
     <div className="main-container">
       <Title title={title}>
-        <Button text="View Reports" classes="btn btn-secondary btn-sm" handleClick={onViewReports} />
-        <Button text="Add Transaction" classes="btn btn-primary btn-sm" handleClick={onAddTransaction} />
+        <Button className="btn-secondary btn-sm" onClick={onViewReports}>
+          View Reports
+        </Button>
+        <Button className="btn btn-primary btn-sm" onClick={onAddTransaction}>
+          Add Transaction
+        </Button>
       </Title>
 
       <div className={styles.cards}>
