@@ -1,33 +1,34 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Button } from '../../components/button/Button';
-import Card from '../../components/card/Card';
-import { useAccounts, useTransactions } from '../../hooks/useTransactions';
+import { useEffect, useMemo, useState } from "react";
+import { Button } from "../../components/button/Button";
+import Card from "../../components/card/Card";
+import { useAccounts, useTransactions } from "../../hooks/useTransactions";
 
-import Title from '../../layout/Title';
-import TransactionTable from './table/TransactionTable';
-import s from './Transactions.module.css';
-import { onAddTransaction, onRecurring } from './utitlity';
-import { splitBuckets } from '../../utils/transactions';
-import { useDebouncedValue } from '../../hooks/useDebouncedValue';
+import Title from "../../layout/Title";
+import TransactionTable from "./table/TransactionTable";
+import s from "./Transactions.module.css";
+import { onAddTransaction, onRecurring } from "./utitlity";
+import { splitBuckets } from "../../utils/transactions";
+import { useDebouncedValue } from "../../hooks/useDebouncedValue";
 
 export default function Transactions() {
-  const title = 'Transactions';
+  const title = "Transactions";
 
   const { data: accountsData } = useAccounts();
   const { totalBalance } = accountsData ?? { accounts: [], totalBalance: 0 };
 
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const debouncedSearch = useDebouncedValue(search, 300);
 
-  const { data, isFetching, isLoading, isError } = useTransactions({
-    page,
-    pageSize,
-    q: debouncedSearch,
-  });
+  const txParams = useMemo(
+    () => ({ page, pageSize, q: debouncedSearch }),
+    [page, pageSize, debouncedSearch]
+  );
 
-  const rows = data?.data ?? [];
+  const { data, isFetching, isLoading, isError } = useTransactions(txParams);
+
+  const rows = useMemo(() => data?.data ?? [], [data]);
   const totalPages = data?.totalPages ?? 1;
 
   const goPrev = () => setPage((p) => Math.max(1, p - 1));
@@ -70,9 +71,7 @@ export default function Transactions() {
       </div>
 
       <div className={s.table_scroll}>
-
         <TransactionTable
-          className={`${s.responsive_table} ${s.sticky_header} ${s.sticky_first_col}`}
           rows={rows}
           isLoading={isLoading}
           isError={isError}

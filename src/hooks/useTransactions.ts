@@ -27,42 +27,38 @@ export function useTransactions(params: ListParams) {
    
   });
 
+useEffect(() => {
+  if (query.isPlaceholderData) return;
 
-  useEffect(() => {
-    if (query.isPlaceholderData) return;
-    const nextPage = query.data?.nextPage ?? null;
-    if (nextPage) {
-      const nextParams = { ...params, page: nextPage };
-      queryClient.prefetchQuery({
-        queryKey: txKeys.list(nextParams),
-        queryFn: ({ signal }) => listTransactions(nextParams, { signal }),
-        staleTime: STALE_MS,
-        gcTime: GC_MS,
-      });
-    }
+  const nextPage = query.data?.nextPage ?? null;
+  if (nextPage) {
+    const nextParams = { ...params, page: nextPage };
+    queryClient.prefetchQuery({
+      queryKey: txKeys.list(nextParams),
+      queryFn: ({ signal }) => listTransactions(nextParams, { signal }),
+      staleTime: STALE_MS,
+      gcTime: GC_MS,
+    });
+  }
 
-    const prevPage = query.data?.prevPage ?? null;
-    if (prevPage) {
-      const prevParams = { ...params, page: prevPage };
-      queryClient.prefetchQuery({
-        queryKey: txKeys.list(prevParams),
-        queryFn: ({ signal }) => listTransactions(prevParams, { signal }),
-        staleTime: STALE_MS,
-        gcTime: GC_MS,
-      });
-    }
-  }, [
-    query.isPlaceholderData,
-    query.data?.nextPage,
-    query.data?.prevPage,
-    params.page,
-    params.pageSize,
-    params.q,
-    params.status,
-    params.type,
-    params.sort,
-    queryClient,
-  ]);
+  const prevPage = query.data?.prevPage ?? null;
+  if (prevPage) {
+    const prevParams = { ...params, page: prevPage };
+    queryClient.prefetchQuery({
+      queryKey: txKeys.list(prevParams),
+      queryFn: ({ signal }) => listTransactions(prevParams, { signal }),
+      staleTime: STALE_MS,
+      gcTime: GC_MS,
+    });
+  }
+}, [
+  query.isPlaceholderData,
+  query.data?.nextPage,
+  query.data?.prevPage,
+  params,           
+  queryClient,
+]);
+
 
   return query;
 }

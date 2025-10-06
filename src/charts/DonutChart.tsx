@@ -6,17 +6,15 @@ export type DonutDatum = { name: string; value: number; color?: string };
 const formatCurrencyDefault = (n: number) =>
   new Intl.NumberFormat(undefined, { style: "currency", currency: "EUR" }).format(n);
 
-
-
 type Props = {
   data: DonutDatum[];
   width?: number;
   height?: number;
   padAngle?: number;
+  innerRatio?: number;
   showTotalInCenter?: boolean;
   title?: string;
 };
-
 
 export default function DonutChart({
   data,
@@ -27,27 +25,22 @@ export default function DonutChart({
   showTotalInCenter = true,
   title,
 }: Props) {
-
   const currency = formatCurrencyDefault;
   const svgRef = useRef<SVGSVGElement | null>(null);
 
-
-  const cleanData = useMemo(
-    () => data.filter(d => d.value > 0),
-    [data]
-  );
+  const cleanData = useMemo(() => data.filter(d => d.value > 0), [data]);
 
   const total = useMemo(
     () => cleanData.reduce((a, b) => a + b.value, 0),
     [cleanData]
   );
 
-  // fall back palette
   const color = useMemo(() => {
     const names = cleanData.map(d => d.name);
-    const provided = new Map(cleanData.map(d => [d.name, d.color]));
+    const provided = new Map<string, string | undefined>(
+      cleanData.map(d => [d.name, d.color])
+    );
     const scale = d3.scaleOrdinal<string, string>(d3.schemeTableau10).domain(names);
-
     return (name: string) => provided.get(name) ?? scale(name);
   }, [cleanData]);
 
@@ -57,7 +50,7 @@ export default function DonutChart({
 
     const W = 420;
     const H = 260;
-    const cx = W * 0.35;   // leave room for legend at right
+    const cx = W * 0.35;
     const cy = H / 2;
     const outerR = Math.min(W * 0.6, H) / 2;
     const innerR = Math.max(0, Math.min(outerR - 2, outerR * innerRatio));
@@ -71,7 +64,7 @@ export default function DonutChart({
     const pie = d3
       .pie<DonutDatum>()
       .sort(null)
-      .value((d: { value: any; }) => d.value)
+      .value((d: DonutDatum) => d.value)
       .padAngle(padAngle);
 
     const arcs = pie(cleanData);
@@ -80,7 +73,6 @@ export default function DonutChart({
       .outerRadius(outerR)
       .innerRadius(innerR);
 
-    // slices with simple enter animation
     g.selectAll("path")
       .data(arcs)
       .join("path")
@@ -94,7 +86,6 @@ export default function DonutChart({
         return t => arc(i(t))!;
       });
 
-    // center total text
     if (showTotalInCenter) {
       const center = g.append("g").attr("text-anchor", "middle");
       if (title) {
@@ -113,13 +104,12 @@ export default function DonutChart({
         .text(currency(total));
       center
         .append("text")
-        .attr("y", (title ? 34 : 24))
+        .attr("y", title ? 34 : 24)
         .attr("font-size", 11)
         .attr("fill", "#6b7280")
         .text("Total Spendings");
     }
 
-    // right legend (labels + %)
     const legendX = W * 0.62;
     const rowH = 20;
     const legend = svg.append("g").attr("transform", `translate(${legendX},${20})`);
@@ -152,9 +142,17 @@ export default function DonutChart({
         return `${pct.toFixed(0)}%`;
       });
 
-    // accessible title/desc
     svg.append("title").text(`${title ?? "Spending"} • ${currency(total)}`);
-  }, [cleanData, color, innerRatio, padAngle, currency, title, showTotalInCenter]);
+  }, [
+    cleanData,
+    color,
+    innerRatio,
+    padAngle,
+    currency,
+    title,
+    showTotalInCenter,
+    total
+  ]);
 
   return (
     <svg
@@ -164,6 +162,4 @@ export default function DonutChart({
       style={{ display: "block", maxWidth: "100%" }}
     />
   );
-
-
 }

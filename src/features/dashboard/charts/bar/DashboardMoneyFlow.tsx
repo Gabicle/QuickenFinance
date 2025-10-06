@@ -3,8 +3,7 @@ import * as d3 from "d3";
 import { formatAmount } from "../../../../utils/currency";
 import { filterCompletedInYear } from "../../../../utils/transactions";
 import type { Transaction } from "../../../transactions/model/transaction";
-import styles from './DashboardMoneyFlow.module.css';
-
+import styles from "./DashboardMoneyFlow.module.css";
 
 type Props = { year?: number; transactions: Transaction[] };
 
@@ -47,7 +46,6 @@ export default function DashboardMoneyFlow({
     [transactions, year]
   );
   const rows = useMemo(() => monthlyTotals(completed), [completed]);
-
 
   useEffect(() => {
     const wrapperEl = containerRef.current;
@@ -115,7 +113,11 @@ export default function DashboardMoneyFlow({
       .call((gx) => gx.selectAll("text").style("font-size", "12px"));
 
     g.append("g")
-      .call(d3.axisLeft(y).ticks(6).tickFormat((d: any) => formatAmount(Number(d), true)))
+      .call(
+        d3.axisLeft(y)
+          .ticks(6)
+          .tickFormat((d: d3.NumberValue) => formatAmount(+d, true))
+      )
       .call((gy) =>
         gy
           .append("text")
@@ -143,17 +145,13 @@ export default function DashboardMoneyFlow({
       .style("opacity", 0)
       .style("will-change", "transform");
 
-
     let raf = 0;
-    const onMove = (event: any) => {
+    const onMove = (event: MouseEvent) => {
       if (raf) cancelAnimationFrame(raf);
       const [px, py] = d3.pointer(event, containerRef.current);
-
       raf = requestAnimationFrame(() => {
         tooltip.style("transform", `translate(${px + 12}px, ${py - 16}px)`);
       });
-
-      return () => { if (raf) cancelAnimationFrame(raf); };
     };
 
     const barsLayer = g.append("g").attr("class", "bars");
@@ -222,15 +220,13 @@ export default function DashboardMoneyFlow({
     li.append("rect").attr("width", 12).attr("height", 12).attr("rx", 2).attr("fill", (d) => d.fill);
     li.append("text").attr("x", 18).attr("y", 10).attr("font-size", 12).text((d) => d.label);
 
-    return () => { if (raf) cancelAnimationFrame(raf); };
-  }, [W, H, rows, formatAmount, year, containerRef]);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [W, H, rows, year, containerRef]);
 
   return (
-    <div
-      ref={containerRef}
-      className={styles.moneyflow_wrapper}
-
-    >
+    <div ref={containerRef} className={styles.moneyflow_wrapper}>
       <svg ref={svgRef} role="img" aria-label="Income and Expense by month" />
       <div ref={tooltipRef} />
     </div>
@@ -244,8 +240,14 @@ function monthlyTotals(rows: Transaction[]) {
 
   return months.map((m) => {
     const monthTx = rows.filter((t) => new Date(t.date).getMonth() === m);
-    const income = d3.sum(monthTx.filter((t) => t.type === "income"), (t) => t.amount.amount);
-    const expense = d3.sum(monthTx.filter((t) => t.type === "expense"), (t) => t.amount.amount);
+    const income = d3.sum(
+      monthTx.filter((t) => t.type === "income"),
+      (t) => t.amount.amount
+    );
+    const expense = d3.sum(
+      monthTx.filter((t) => t.type === "expense"),
+      (t) => t.amount.amount
+    );
     return { monthIdx: m, monthLabel: fmtMonth(monthDate(m)), income, expense };
   });
 }

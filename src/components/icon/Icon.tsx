@@ -21,7 +21,10 @@ type BaseProps = {
   size?: Size;
   color?: Color;
   className?: string;
-} & Omit<SVGProps<SVGSVGElement>, "width" | "height" | "color" | "children" | "aria-label">;
+} & Omit<
+  SVGProps<SVGSVGElement>,
+  "width" | "height" | "color" | "children" | "aria-label"
+>;
 
 type IconProps = BaseProps & (DecorativeProps | NonDecorativeProps);
 
@@ -37,17 +40,21 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
   },
   ref
 ) {
+  const rawId = useId();
+
   if (!GlyphComp) {
-
-    // eslint-disable-next-line no-console
     console.error("Icon: `glyph` prop is undefined. Check your import/exports.");
-
     return null;
   }
 
-  const classes = clsx(styles.icon, styles[size], styles[`icon-${color}`], className);
-  const titleId = !decorative ? useId() : undefined;
+  const classes = clsx(
+    styles.icon,
+    styles[size],
+    styles[`icon-${color}`],
+    className
+  );
 
+  const titleId = !decorative ? rawId : undefined;
 
   return (
     <GlyphComp
@@ -58,8 +65,8 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
       focusable={false}
       {...rest}
       {...(decorative
-        ? { "aria-hidden": true as const }
-        : { role: "img" as const, "aria-labelledby": titleId })}
+        ? { "aria-hidden": true }
+        : { role: "img", "aria-labelledby": titleId })}
     >
       {!decorative ? <title id={titleId}>{title}</title> : null}
     </GlyphComp>

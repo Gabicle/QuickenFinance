@@ -81,9 +81,9 @@ function toCatKey(label: string | undefined | null): CatKey {
 
 function startForRange(range: RangeKey): Date {
   const now = new Date();
-  if (range === "weekly") return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6); // last 7 days
-  if (range === "monthly") return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 29); // last 30 days
-  return new Date(now.getFullYear(), 0, 1); // YTD
+  if (range === "weekly") return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6);
+  if (range === "monthly") return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 29);
+  return new Date(now.getFullYear(), 0, 1);
 }
 
 function useElementSize<T extends HTMLElement>() {
@@ -109,7 +109,7 @@ export default function DashboardPie({ transactions, range }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
 
-  // Expenses only, completed, in selected range
+  // filter completed expenses in selected range
   const filtered = useMemo(() => {
     const start = startForRange(range);
     const now = new Date();
@@ -133,7 +133,7 @@ export default function DashboardPie({ transactions, range }: Props) {
     [currency]
   );
 
-  // Aggregate by category
+  // aggregate by category
   const data = useMemo(() => {
     const map = new Map<CatKey, number>();
     for (const t of filtered) {
@@ -151,7 +151,6 @@ export default function DashboardPie({ transactions, range }: Props) {
 
   const total = useMemo(() => data.reduce((s, d) => s + d.value, 0), [data]);
 
-  // Layout
   const W = Math.max(0, width);
   const MAX_HEIGHT = 280;
   const aspect = 16 / 9;
@@ -206,9 +205,8 @@ export default function DashboardPie({ transactions, range }: Props) {
     const outerR = radius;
 
     const paletteFallback = d3
-      .schemeTableau10.concat((d3 as any).schemeSet2?.flat?.() ?? [])
+      .schemeTableau10.concat((d3 as unknown as { schemeSet2?: string[][] }).schemeSet2?.flat?.() ?? [])
       .slice(0, Math.max(10, data.length));
-
 
     const colorsFromCSS = (() => {
       const cs = getComputedStyle(wrapperEl);
@@ -250,17 +248,18 @@ export default function DashboardPie({ transactions, range }: Props) {
       .style("will-change", "transform");
 
     let raf = 0;
-    const onMove = (event: any) => {
+    const onMove = (event: MouseEvent) => {
       if (raf) cancelAnimationFrame(raf);
       const [px, py] = d3.pointer(event, containerRef.current);
       raf = requestAnimationFrame(() => {
         tooltip.style("transform", `translate(${px + 12}px, ${py + 12}px)`);
       });
-      return () => {
-        if (raf) cancelAnimationFrame(raf);
-      };
     };
-    const onOver = (_event: any, d: d3.PieArcDatum<{ key: string; label: string; value: number }>) => {
+
+    const onOver = (
+      _event: MouseEvent,
+      d: d3.PieArcDatum<{ key: string; label: string; value: number }>
+    ) => {
       const pct = total > 0 ? Math.round((d.data.value / total) * 100) : 0;
       tooltip
         .style("opacity", 1)
@@ -269,6 +268,7 @@ export default function DashboardPie({ transactions, range }: Props) {
            <div>${pct}% • ${fmtMoney.format(d.data.value)}</div>`
         );
     };
+
     const onOut = () => {
       tooltip.style("opacity", 0);
     };
@@ -301,13 +301,13 @@ export default function DashboardPie({ transactions, range }: Props) {
       .data(arcs)
       .join("path")
       .attr("class", "segment")
-      .attr("d", arc as any)
+      .attr("d", arc)
       .attr("fill", (d) => color(d.data.key))
       .on("mousemove", onMove)
       .on("mouseover", onOver)
       .on("mouseout", onOut);
 
-    // Center text (total)
+    // Center text
     centerLayer
       .append("text")
       .attr("text-anchor", "middle")
@@ -345,17 +345,6 @@ export default function DashboardPie({ transactions, range }: Props) {
       .attr("y", 10)
       .attr("font-size", 12)
       .text((d) => d.label);
-
-    // Empty state text (inside svg)
-    if (legendItems.length === 0) {
-      g.append("text")
-        .attr("x", margin.left + 8)
-        .attr("y", margin.top + 12)
-        .attr("font-size", 12)
-        .attr("fill", "currentColor")
-        .attr("opacity", 0.6)
-        .text("No expenses in this period.");
-    }
 
     return () => {
       if (raf) cancelAnimationFrame(raf);

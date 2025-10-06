@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../../components/button/Button";
-import Card, { makeFooterNode } from "../../components/card/Card";
+import Card from "../../components/card/Card";
 import Widget from "../../components/widget/Widget";
 import BankNote04 from "../../icons/BankNote04";
 import Title from "../../layout/Title";
@@ -15,6 +15,7 @@ import { useDashboardData } from "./hooks/useDashboardData";
 import DashboardMoneyFlow from "./charts/bar/DashboardMoneyFlow";
 import DashboardPie, { type RangeKey } from "./charts/pie/DashboardPie";
 import { useDebouncedValue } from "../../hooks/useDebouncedValue";
+import CardFooter from "../../components/card/CardFooter";
 
 export default function Dashboard() {
   const title = "Dashboard";
@@ -25,6 +26,8 @@ export default function Dashboard() {
   const { recentRows, recentState, chartRows, totals, prevMonth, year } =
     useDashboardData({ q: debouncedSearch, year: new Date().getFullYear() });
 
+
+
   return (
     <div className="main-container">
       <Title title={title}>
@@ -33,10 +36,35 @@ export default function Dashboard() {
       </Title>
 
       <div className={styles.cards}>
-        <Card header="Total Earnings" aggregate={totals.totalEarnings} footer={makeFooterNode(totals.totalEarnings, prevMonth.earnings)} />
-        <Card header="Total Spendings" aggregate={totals.totalSpendings} footer={makeFooterNode(totals.totalSpendings, prevMonth.spendings)} />
-        <Card header="Total Savings" aggregate={totals.totalSavings} footer={makeFooterNode(totals.totalSavings, prevMonth.spendings - prevMonth.investment)} />
-        <Card header="Total Investment" aggregate={totals.totalInvestment} footer={makeFooterNode(totals.totalInvestment, prevMonth.investment)} />
+        <Card
+          header="Total Earnings"
+          aggregate={totals.totalEarnings}
+          footer={<CardFooter current={totals.totalEarnings} previous={prevMonth.earnings} />}
+        />
+
+        <Card
+          header="Total Spendings"
+          aggregate={totals.totalSpendings}
+          footer={<CardFooter current={totals.totalSpendings} previous={prevMonth.spendings} />}
+        />
+
+        <Card
+          header="Total Savings"
+          aggregate={totals.totalSavings}
+          footer={
+            <CardFooter
+              current={totals.totalSavings}
+              previous={prevMonth.spendings - prevMonth.investment}
+            />
+          }
+        />
+
+        <Card
+          header="Total Investment"
+          aggregate={totals.totalInvestment}
+          footer={<CardFooter current={totals.totalInvestment} previous={prevMonth.investment} />}
+        />
+
       </div>
       <Widget title="Money Flow" icon={BankNote04}>
         <DashboardMoneyFlow year={year} transactions={chartRows} />

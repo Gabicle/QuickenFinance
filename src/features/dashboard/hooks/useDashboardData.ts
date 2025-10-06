@@ -1,17 +1,24 @@
 import { useMemo } from "react";
-import{ useTransactions } from "../../../hooks/useTransactions";
+import { useTransactions } from "../../../hooks/useTransactions";
 import { isSameMonth, isPrevMonth } from "../../../utils/dateRanges";
-import{ splitBuckets } from "../../../utils/transactions";
+import { splitBuckets } from "../../../utils/transactions";
 import { CURRENCY } from "../../../utils/currency";
 
 type Params = { q: string; year: number };
 
 export function useDashboardData({ q, year }: Params) {
-  const recentParams = useMemo(() => ({ page: 1, pageSize: 3, q, sort: "-date" as const }), [q]);
-  const chartParams  = useMemo(() => ({ page: 1, pageSize: 1000, status: "completed" as const, sort: "date" as const }), []);
+  const recentParams = useMemo(
+    () => ({ page: 1, pageSize: 3, q, sort: "-date" as const }),
+    [q]
+  );
+
+  const chartParams = useMemo(
+    () => ({ page: 1, pageSize: 1000, status: "completed" as const, sort: "date" as const }),
+    []
+  );
 
   const recent = useTransactions(recentParams);
-  const chart  = useTransactions(chartParams);
+  const chart = useTransactions(chartParams);
 
   const rowsYear = useMemo(() => {
     const data = chart.data?.data ?? [];
@@ -19,6 +26,7 @@ export function useDashboardData({ q, year }: Params) {
   }, [chart.data, year]);
 
   const now = useMemo(() => new Date(), []);
+
   const { curr, prev } = useMemo(() => {
     const all = chart.data?.data ?? [];
     const currRows = all.filter(t => isSameMonth(t.date, now));
@@ -41,9 +49,17 @@ export function useDashboardData({ q, year }: Params) {
 
   return {
     recentRows: recent.data?.data ?? [],
-    recentState: { isLoading: recent.isLoading, isFetching: recent.isFetching, isError: recent.isError },
+    recentState: {
+      isLoading: recent.isLoading,
+      isFetching: recent.isFetching,
+      isError: recent.isError,
+    },
     chartRows: rowsYear,
-    chartState: { isLoading: chart.isLoading, isFetching: chart.isFetching, isError: chart.isError },
+    chartState: {
+      isLoading: chart.isLoading,
+      isFetching: chart.isFetching,
+      isError: chart.isError,
+    },
     totals,
     prevMonth: prev,
     currency,
