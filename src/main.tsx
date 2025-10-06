@@ -7,9 +7,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const queryClient = new QueryClient();
 
 async function enableMocking() {
-  if (!(import.meta.env.DEV || import.meta.env.VITE_USE_MSW === 'true')) {
-    return;
-  }
+  if (import.meta.env.VITE_USE_MSW !== 'true') return;
+
 
   const { worker } = await import('./mocks/browser');
   await worker.start({

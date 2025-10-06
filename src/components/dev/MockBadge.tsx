@@ -1,5 +1,5 @@
 export function MockBadge() {
-  const enabled = import.meta.env.DEV || import.meta.env.VITE_USE_MSW === 'true';
+  const enabled = import.meta.env.VITE_USE_MSW === 'true';
   if (!enabled) return null;
   return (
     <div style={{
