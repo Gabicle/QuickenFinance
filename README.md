@@ -1,70 +1,77 @@
-# React + TypeScript + Vite
+# 📊 Dashboard App (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite + TypeScript application with charts, routing, and mock APIs.  
+Currently in **frontend-only** mode, with plans to transition into a **full-stack app**.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✅ Progress Tracker
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [x] React + Vite + TypeScript setup
+- [x] Routing with lazy-loaded pages
+- [x] Sidebar + breadcrumbs + layout
+- [x] MSW mock API with badge indicator
+- [x] ESLint + Prettier + Vitest setup
+- [x] GitHub Actions CI (lint, typecheck, test, build)
+- [ ] Real backend integration (replace MSW)
+- [ ] Authentication & sessions
+- [ ] Database-backed transactions
+- [ ] Server-side pagination & filters
+- [ ] Export features (CSV/XLSX)
+- [ ] Dark mode + advanced charts
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✅ Current Progress
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Frontend architecture**
+  - React Router v6 with lazy-loaded routes
+  - Page layout with sidebar, breadcrumbs, header
+  - Error boundary for route safety
+- **State & data**
+  - TanStack Query (React Query) for API state
+  - Mock Service Worker (MSW) for simulating backend calls
+  - Example transaction API wrapper with typed params
+- **UI & components**
+  - Reusable `<Button />` with variants
+  - Sidebar navigation with `aria-current` accessibility
+  - Chart components (donut chart w/ D3) with `Suspense` loading
+- **Tooling**
+  - ESLint + Prettier for consistent style
+  - Vitest + React Testing Library smoke tests
+  - GitHub Actions CI (lint, typecheck, test, build)
+  - Example `.env` config
+- **Dev experience**
+  - MSW mock badge for clarity
+  - React Query Devtools in dev
+  - SPA routing config for Netlify
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚠️ Current Limitation
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-#Quicken Finance
+The project relies on **Mock Service Worker (MSW)** to simulate API calls.  
+For my specific use case, **MSW is no longer sufficient** (e.g., persistence, auth, business logic).  
+
+➡️ **Next phase:** Replace MSW with a real backend service, turning this into a **proper full-stack application**.
+
+---
+
+## 📌 Roadmap
+
+### 🔨 In Progress
+- [ ] Replace MSW with real backend (Python Flask)
+- [ ] Connect to real database (Postgres)
+- [ ] Add authentication & user sessions
+- [ ] Server-side pagination & filtering for transactions
+- [ ] Deployment of backend
+
+### 📅 Future Enhancements
+- [ ] Dark mode toggle
+- [ ] More chart types (line, bar, stacked area)
+- [ ] Export transactions (CSV/XLSX)
+- [ ] Role-based access control
+- [ ] CI/CD integration for backend
+
+
