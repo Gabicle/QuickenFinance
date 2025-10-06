@@ -1,0 +1,43 @@
+.icon {
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.xs {
+  font-size: var(--icon-xs);
+}
+
+.sm {
+  font-size: var(--icon-sm);
+}
+
+.md {
+  font-size: var(--icon-md);
+}
+
+.lg {
+  font-size: var(--icon-lg);
+
+}
+
+/* colors */
+.icon-inherit {
+  color: currentColor;
+}
+
+.icon-brand {
+  color: var(--color-primary);
+}
+
+.icon-danger {
+  color: var(--color-danger);
+}
+
+.icon-muted {
+  color: var(--color-greyscale-500);
+}
+
+.icon-white {
+  color: var(--color-greyscale-0);
+}

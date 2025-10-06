@@ -1,0 +1,98 @@
+.sidebar_container {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--color-border);
+  background-color: var(--bg-light);
+  height: 100%;
+}
+
+.sidebar_header {
+  display: flex;
+  padding: var(--spacing-2);
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.sidebar_menu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-1) var(--spacing-3) var(--spacing-3);
+}
+
+
+
+.sidebar_menu div:last-of-type {
+  margin-top: auto;
+}
+
+.sidebar_logoTitle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-1);
+}
+
+.sidebar_collapseBtn {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: var(--spacing-0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-greyscale-0);
+  box-shadow: var(--shadow-xs);
+  border-radius: var(--radius-0);
+  border: 1px solid var(--color-border);
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.divider {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid #DFE1E7;
+}
+
+.sidebar_menu {
+  padding: 8px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ------- collapsed overrides ------- */
+.sidebar_container.collapsed {
+  align-items: center;
+}
+
+
+.sidebar_container.collapsed .sidebar_header {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 8px;
+}
+
+.sidebar_container.collapsed .sidebar_logoTitle {
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+}
+
+.sidebar_container.collapsed .title {
+  display: none;
+}
+
+/* keeps the button visible under the logo */
+.sidebar_container.collapsed .sidebar_collapseBtn {}
+
+
+.sidebar_container.collapsed .sidebar_menu {
+  padding-left: 8px;
+  padding-right: 8px;
+}

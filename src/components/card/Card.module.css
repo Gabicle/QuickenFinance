@@ -1,0 +1,68 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3);
+  border-radius: var(--radius-1);
+
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-xs);
+  flex: 1 0 0;
+}
+
+.card_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card_header_icon {
+  border-radius: var(--radius-1);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-primary-50);
+  box-shadow: var(--shadow-xs);
+  color: var(--color-primary-500);
+}
+
+.card_footer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-2);
+
+}
+
+
+
+
+/* Caption */
+.caption {
+  color: #666D80;
+  font-weight: 500;
+}
+
+/* Icon tile from the header (36x36) */
+.iconContainer {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #F1ECFC;
+}
+
+
+.iconRing {
+  position: absolute;
+  left: 1.67px;
+  top: 1.67px;
+  width: 16.67px;
+  height: 16.67px;
+  outline: 2px solid #713DDD;
+  outline-offset: -1px;
+  border-radius: 2px;
+
+}

@@ -1,0 +1,68 @@
+.section {
+  width: 100%;
+}
+
+.tableWrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-0);
+  overflow: hidden;
+  margin: var(--spacing-2) 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--color-greyscale-0);
+}
+
+.th {
+  text-align: left;
+  background: var(--color-greyscale-25);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-xs);
+  line-height: 1rem;
+  font-family: var(--font-family);
+  color: var(--color-greyscale-500);
+  letter-spacing: 0.2px;
+}
+
+.td {
+  padding: var(--spacing-2) var(--spacing-3);
+  border-bottom: 1px solid var(--color-border);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-sm);
+  line-height: 1.25rem;
+  font-family: var(--font-family);
+  color: var(--color-greyscale-900);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--spacing-5);
+  color: var(--color-greyscale-500);
+}
+
+
+
+.negative {
+  color: var(--color-danger);
+}
+
+.positive {
+  color: var(--color-success);
+}
+
+.sr_only {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}

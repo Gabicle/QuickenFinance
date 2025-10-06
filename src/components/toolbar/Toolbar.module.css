@@ -1,0 +1,101 @@
+.bar {
+  width: 100%;
+  padding: var(--spacing-1) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.barLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.searchLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  border-radius: var(--radius-0);
+  outline: 1px solid var(--color-border);
+  outline-offset: -1px;
+  height: 38px;
+  padding: var(--spacing-1) var(--spacing-3) var(--spacing-1) var(--spacing-2);
+}
+
+
+.searchIcon {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+}
+
+.searchGlyph {
+  position: absolute;
+  left: var(--spacing-0);
+  top: var(--spacing-0);
+  width: var(--spacing-2);
+  height: var(--spacing-2);
+  outline: 1.5px solid var(--color-greyscale-200);
+  outline-offset: -0.75px;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-greyscale-500);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  letter-spacing: 0.28px;
+  min-width: 180px;
+}
+
+.searchInput::placeholder {
+  color: var(--color-greyscale-500);
+}
+
+.iconButton {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+  border-radius: var(--radius-0);
+  outline: 1px solid var(--color-border);
+  outline-offset: -1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-light);
+  cursor: pointer;
+}
+
+.iconButton:focus-visible {
+  box-shadow: 0 0 0 2px (--color-sky-100);
+  ;
+}
+
+.iconBoxSmall {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+  position: relative;
+  overflow: hidden;
+}
+
+.iconSquareSmall {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  outline: 1.5px solid var(--color-greyscale-200);
+  outline-offset: -0.75px;
+}
